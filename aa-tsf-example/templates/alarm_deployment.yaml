@@ -1,0 +1,94 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: alarm
+  labels:
+    service_name: alarm
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: 2
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      service_name: alarm
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        service_name: alarm
+      namespace: {{ .Values.global.namespace }}
+    spec:
+      affinity:
+        podAffinity: {}
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: service_name
+                    operator: In
+                    values:
+                      - alarm
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - env:
+            - name: TSF-NODE1
+              value: "{{ .Values.global.node_list.one }}"
+            - name: TSF-NODE2
+              value: "{{ .Values.global.node_list.two }}"
+            - name: TSF-NODE3
+              value: "{{ .Values.global.node_list.three }}"
+          image: {{ .Values.global.registry.address }}/{{ .Values.global.images.alarm.repository }}:{{ .Values.global.images.alarm.tag }}
+          imagePullPolicy: Always
+## resource 要根据实际值修改
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+     TSF-NODE3livenessProbe:
+            failureThreshold: 2
+            httpGet:
+              path: /
+              port: 8050 ## 根据实际的端口修改
+              scheme: HTTP
+            initialDelaySeconds: 100
+            periodSeconds: 2
+            successThreshold: 1
+            timeoutSeconds: 15
+          name: alarm
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8050 ## 根据实际的端口修改
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 15
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_root_hostpath.name }}"
+          - mountPath: "{{ .Values.global.volumes_date_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_date_hostpath.name }}"
+      dnsPolicy: ClusterFirst
+      hostNetwork: true
+      nodeSelector:
+        tsf: 'true'
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 10
+      volumes:
+#{{ if .Values.pvc -}}
+{{ toYaml .Values.volumes_alarm_pvc | indent 8 }}
+#{{ else -}}
+#{{ toYaml .Values.volumes_alarm_hostpath | indent 8 }}
+#{{ end -}}
