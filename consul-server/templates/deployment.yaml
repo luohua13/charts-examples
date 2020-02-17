@@ -41,6 +41,24 @@ spec:
               fieldRef:
                 apiVersion: v1
                 fieldPath: status.hostIP
+          - name: TSF_MYSQL_PROT
+            value: "3306"
+          - name: TSF_MYSQL_USER
+            value: root
+          - name: TSF_MYSQL_PASSWORD
+            value: "Tcdn@2007"
+          - name: DB_HOST
+            value: "192.168.122.83"
+          - name: LOCAL_IP
+            value: "0.0.0.0"
+          - name: TSF_REDIS_PASSWORD
+            value: "Tcdn@2007"
+          - name: MAX_REDIS_MEM
+            value: 4gb
+          - name: MAX_REDIS_MEMORY_POLICY
+            value: allkeys-lru
+          - name: MAX_REDIS_CLIENTS
+            value: "2000"
           volumeMounts:
           - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
             name: "{{ .Values.global.volumes_root_hostpath.name }}"

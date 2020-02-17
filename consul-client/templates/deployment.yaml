@@ -45,12 +45,12 @@ spec:
 #            - name: http
 #              containerPort: 8500
 #              protocol: TCP
-          readinessProbe:
-            httpGet:
-              port: 8500
-              path: /v1/health/state/critical
-            initialDelaySeconds: 20
-            periodSeconds: 15
+#          readinessProbe:
+#            httpGet:
+#              port: 8500
+#              path: /v1/health/state/critical
+#            initialDelaySeconds: 20
+#            periodSeconds: 15
           securityContext:
             privileged: true
           resources:
