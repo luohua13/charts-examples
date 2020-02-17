@@ -22,17 +22,15 @@ global:
     hostPath:
       path: /date/
       type: ""
-volumes_alarm_pvc:
+  volumes_alarm_pvc:
+
+  alarm:
+    resources: |
+      requests:
+        cpu: "2048m"
+        memory: "2048Mi"
+      limits:
+        cpu: "4096m"
+        memory: "8192Mi"
 
 
-
-
-
-
-resources:
-  requests:
-    cpu: 256m
-    memory: 512Mi
-  limits:
-    cpu: "2"
-    memory: 4Gi

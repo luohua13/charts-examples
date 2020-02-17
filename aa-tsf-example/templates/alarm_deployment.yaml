@@ -44,14 +44,11 @@ spec:
           image: {{ .Values.global.registry.address }}/{{ .Values.global.images.alarm.repository }}:{{ .Values.global.images.alarm.tag }}
           imagePullPolicy: Always
 ## resource 要根据实际值修改
+          {{- if .Values.meshGateway.resources }}
           resources:
-            requests:
-              cpu: 10m
-              memory: 20Mi
-            limits:
-              cpu: "1"
-              memory: 1Gi
-     TSF-NODE3livenessProbe:
+            {{ tpl .Values.meshGateway.resources . | nindent 12 | trim }}
+          {{- end }}
+          livenessProbe:
             failureThreshold: 2
             httpGet:
               path: /

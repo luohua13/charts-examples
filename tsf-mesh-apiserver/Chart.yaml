@@ -1,5 +1,0 @@
-apiVersion: v1
-name: tsf-mesh-apiserver
-version: v1.0
-appVersion: "0.1"
-description: tsf-mesh-apiserver
