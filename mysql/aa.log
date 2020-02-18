@@ -1,0 +1,119 @@
+Name:               mysql-ha-slave-0
+Namespace:          default
+Priority:           0
+PriorityClassName:  <none>
+Node:               master2/192.168.122.83
+Start Time:         Tue, 04 Feb 2020 15:51:25 +0800
+Labels:             app=mysql
+                    chart=mysql-6.8.0
+                    component=slave
+                    controller-revision-hash=mysql-ha-slave-6f4987f6c
+                    heritage=Tiller
+                    release=mysql-ha
+                    statefulset.kubernetes.io/pod-name=mysql-ha-slave-0
+Annotations:        <none>
+Status:             Running
+IP:                 10.199.1.110
+Controlled By:      StatefulSet/mysql-ha-slave
+Containers:
+  mysql:
+    Container ID:   docker://00c3a44dd6a8e0e00b48afc06b3cc7018b1ad373bec78eec435735eee18e25ce
+    Image:          docker.io/bitnami/mysql:5.7.29
+    Image ID:       docker-pullable://bitnami/mysql@sha256:b574811d26772a08e9485597975fbd6c36230c4df2060b5371758867b75e72ae
+    Port:           3306/TCP
+    Host Port:      0/TCP
+    State:          Waiting
+      Reason:       CrashLoopBackOff
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    11
+      Started:      Tue, 04 Feb 2020 15:59:04 +0800
+      Finished:     Tue, 04 Feb 2020 15:59:12 +0800
+    Ready:          False
+    Restart Count:  6
+    Liveness:       exec [sh -c password_aux="${MYSQL_MASTER_ROOT_PASSWORD:-}"
+if [ -f "${MYSQL_MASTER_ROOT_PASSWORD_FILE:-}" ]; then
+    password_aux=$(cat $MYSQL_MASTER_ROOT_PASSWORD_FILE)
+fi
+mysqladmin status -uroot -p$password_aux
+] delay=120s timeout=1s period=10s #success=1 #failure=3
+    Readiness:  exec [sh -c password_aux="${MYSQL_MASTER_ROOT_PASSWORD:-}"
+if [ -f "${MYSQL_MASTER_ROOT_PASSWORD_FILE:-}" ]; then
+    password_aux=$(cat $MYSQL_MASTER_ROOT_PASSWORD_FILE)
+fi
+mysqladmin status -uroot -p$password_aux
+] delay=30s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      MYSQL_REPLICATION_MODE:      slave
+      MYSQL_MASTER_HOST:           mysql-ha
+      MYSQL_MASTER_PORT_NUMBER:    3306
+      MYSQL_MASTER_ROOT_USER:      root
+      MYSQL_MASTER_ROOT_PASSWORD:  <set to the key 'mysql-root-password' in secret 'mysql-ha'>  Optional: false
+      MYSQL_REPLICATION_USER:      replicator
+      MYSQL_REPLICATION_PASSWORD:  <set to the key 'mysql-replication-password' in secret 'mysql-ha'>  Optional: false
+    Mounts:
+      /bitnami/mysql from data (rw)
+      /opt/bitnami/mysql/conf/my.cnf from config (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-lsvkm (ro)
+  metrics:
+    Container ID:  docker://09c5e9503dfe3d5eca1d3fda01cfbec49a6bf85340fd70723e761477c61e4e75
+    Image:         docker.io/bitnami/mysqld-exporter:0.12.1-debian-10-r0
+    Image ID:      docker-pullable://bitnami/mysqld-exporter@sha256:5091dbcd660dafda9153366408a5664d820d11eb9c0c9090d5fccb7f49dad8df
+    Port:          9104/TCP
+    Host Port:     0/TCP
+    Command:
+      /bin/sh
+      -c
+      password_aux="${MYSQL_MASTER_ROOT_PASSWORD:-}"
+      if [ -f "${MYSQL_MASTER_ROOT_PASSWORD_FILE:-}" ]; then
+          password_aux=$(cat $MYSQL_MASTER_ROOT_PASSWORD_FILE)
+      fi
+      DATA_SOURCE_NAME="root:${password_aux}@(localhost:3306)/" /bin/mysqld_exporter
+      
+    State:          Running
+      Started:      Tue, 04 Feb 2020 15:52:35 +0800
+    Ready:          True
+    Restart Count:  0
+    Liveness:       http-get http://:metrics/metrics delay=15s timeout=5s period=10s #success=1 #failure=3
+    Readiness:      http-get http://:metrics/metrics delay=5s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      MYSQL_MASTER_ROOT_PASSWORD:  <set to the key 'mysql-root-password' in secret 'mysql-ha'>  Optional: false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-lsvkm (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             False 
+  ContainersReady   False 
+  PodScheduled      True 
+Volumes:
+  data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-mysql-ha-slave-0
+    ReadOnly:   false
+  config:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      mysql-ha-slave
+    Optional:  false
+  default-token-lsvkm:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-lsvkm
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type     Reason     Age                     From               Message
+  ----     ------     ----                    ----               -------
+  Normal   Scheduled  4h16m                   default-scheduler  Successfully assigned default/mysql-ha-slave-0 to master2
+  Normal   Pulling    8m43s                   kubelet, master2   pulling image "docker.io/bitnami/mysql:5.7.29"
+  Normal   Pulled     8m8s                    kubelet, master2   Successfully pulled image "docker.io/bitnami/mysql:5.7.29"
+  Normal   Pulling    8m6s                    kubelet, master2   pulling image "docker.io/bitnami/mysqld-exporter:0.12.1-debian-10-r0"
+  Normal   Pulled     7m42s                   kubelet, master2   Successfully pulled image "docker.io/bitnami/mysqld-exporter:0.12.1-debian-10-r0"
+  Normal   Created    7m42s                   kubelet, master2   Created container
+  Normal   Started    7m42s                   kubelet, master2   Started container
+  Normal   Pulled     6m45s (x3 over 7m40s)   kubelet, master2   Container image "docker.io/bitnami/mysql:5.7.29" already present on machine
+  Normal   Created    6m44s (x4 over 8m8s)    kubelet, master2   Created container
+  Normal   Started    6m43s (x4 over 8m7s)    kubelet, master2   Started container
+  Warning  BackOff    3m41s (x18 over 7m30s)  kubelet, master2   Back-off restarting failed container
