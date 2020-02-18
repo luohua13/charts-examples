@@ -1,19 +1,19 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
-  name: {{ include "consul-server.fullname" . }}
+  name: {{ include "ubuntu-env.fullname" . }}
   labels:
-{{ include "consul-server.labels" . | indent 4 }}
+{{ include "ubuntu-env.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "consul-server.name" . }}
+      app.kubernetes.io/name: {{ include "ubuntu-env.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "consul-server.name" . }}
+        app.kubernetes.io/name: {{ include "ubuntu-env.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -22,9 +22,40 @@ spec:
     {{- end }}
       hostNetwork: true
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - image: index.alauda.cn/alaudaorg/tsf-ubuntu:v1.2
+          name: ubuntu-init
+          env:
+          - name: TSF_NODE1
+            value: "{{ .Values.global.node_list.one }}"
+          - name: TSF_NODE2
+            value: "{{ .Values.global.node_list.two }}"
+          - name: TSF_NODE3
+            value: "{{ .Values.global.node_list.three }}"
+          - name: SYSTEMD_IGNORE_CHROOT
+            value: "1"
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.hostIP
+          - name: TSF_MYSQL_PROT
+            value: "3306"
+          - name: TSF_MYSQL_USER
+            value: root
+          - name: TSF_MYSQL_PASSWORD
+            value: "Tcdn@2007"
+          - name: DB_HOST
+            value: "192.168.122.83"
+          - name: LOCAL_IP
+            value: "0.0.0.0"
+          - name: TSF_REDIS_PASSWORD
+            value: "Tcdn@2007"
+          - name: MAX_REDIS_MEM
+            value: 4gb
+          - name: MAX_REDIS_MEMORY_POLICY
+            value: allkeys-lru
+          - name: MAX_REDIS_CLIENTS
+            value: "2000"
           volumeMounts:
           - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
             name: "{{ .Values.global.volumes_root_hostpath.name }}"
@@ -35,20 +66,9 @@ spec:
           - mountPath: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
             name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
             readOnly: true
-          ports:
-            - name: http
-              containerPort: 8040
-              protocol: TCP
-          readinessProbe:
-            httpGet:
-              port: 8040
-              path: /v1/agent/self
-            initialDelaySeconds: 45
-            periodSeconds: 15
           securityContext:
             privileged: true
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+          resources: {}
       volumes:
       - name: "{{ .Values.global.volumes_root_hostpath.name }}"
         hostPath:

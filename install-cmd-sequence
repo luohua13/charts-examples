@@ -1,0 +1,8 @@
+
+
+01     helm  install  ubuntu-env/  --name  ubuntu-env
+02     helm  install  consul-server/ --name  consul-server
+
+
+
+
