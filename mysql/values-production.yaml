@@ -196,7 +196,10 @@ master:
   ## Node labels for pod assignment. Evaluated as a template.
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
-  nodeSelector: {}
+# by bsma
+  nodeSelector: {
+    "tsf-group-3": "enabled"
+  }
 
   ## Tolerations for pod assignment
   ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/

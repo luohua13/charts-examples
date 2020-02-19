@@ -1,7 +1,21 @@
 
+01)  DONE!  
+## prepare,  label nodes
+ kubectl  label node  tsf-docker-1  "tsf-node1=enabled"  
+ kubectl  label node  tsf-docker-3  "tsf-node3=enabled"  
+ kubectl  label node  tsf-docker-4  "tsf-node2=enabled"  
+ kubectl  label node  tsf-docker-2   "tsf-init=enabled"  
+ kubectl label node  tsf-docker-1 "tsf-group-1=enabled" "tsf-group-3=enabled"  "tsf-group-all=enabled"  
+ kubectl  label node tsf-docker-3 "tsf-group-2=enabled" "tsf-group-3=enabled"  "tsf-group-all=enabled"  
+ kubectl label node tsf-docker-4  "tsf-group-1=enabled" "tsf-group-2=enabled"  "tsf-group-all=enabled"  
 
-01     helm  install  ubuntu-env/  --name  ubuntu-env
-02     helm  install  consul-server/ --name  consul-server
+vi   ubuntu-env/values.yaml  ##change ips of tsf-node* 
+02     helm  install  ubuntu-env/  --name  ubuntu-env
+
+03     helm  install  consul-server/ --name  consul-server
+04    helm  install consul-client/  --name consul-client
+
+
 
 
 
