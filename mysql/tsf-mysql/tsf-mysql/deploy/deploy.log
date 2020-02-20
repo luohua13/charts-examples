@@ -1,0 +1,175 @@
+local_ip: 192.168.16.42
+mysql_ips: 192.168.16.41,192.168.16.42
+get tsf-yum-repo.ip from consul config
+tsf_yum_repo_ip: 192.168.16.40
+get tsf-mysql config from consul config
+get tsf-yum-repo.port from consul config
+tsf_yum_repo_port: 8081
+cp -rf conf /root/tsf-mysql/conf/
+cp -rf sql /root/tsf-mysql/sql/
+mysql auto insatll...
+yum remove -Cy mariadb-libs
+Loaded plugins: fastestmirror
+Resolving Dependencies
+--> Running transaction check
+---> Package mariadb-libs.x86_64 1:5.5.60-1.el7_5 will be erased
+--> Processing Dependency: libmysqlclient.so.18()(64bit) for package: 2:postfix-2.10.1-7.el7.x86_64
+--> Processing Dependency: libmysqlclient.so.18(libmysqlclient_18)(64bit) for package: 2:postfix-2.10.1-7.el7.x86_64
+--> Running transaction check
+---> Package postfix.x86_64 2:2.10.1-7.el7 will be erased
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package            Arch         Version                  Repository       Size
+================================================================================
+Removing:
+ mariadb-libs       x86_64       1:5.5.60-1.el7_5         @anaconda       4.4 M
+Removing for dependencies:
+ postfix            x86_64       2:2.10.1-7.el7           @anaconda        12 M
+
+Transaction Summary
+================================================================================
+Remove  1 Package (+1 Dependent package)
+
+Installed size: 17 M
+Downloading packages:
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Erasing    : 2:postfix-2.10.1-7.el7.x86_64                                1/2 
+  Erasing    : 1:mariadb-libs-5.5.60-1.el7_5.x86_64                         2/2 
+  Verifying  : 2:postfix-2.10.1-7.el7.x86_64                                1/2 
+  Verifying  : 1:mariadb-libs-5.5.60-1.el7_5.x86_64                         2/2 
+
+Removed:
+  mariadb-libs.x86_64 1:5.5.60-1.el7_5                                          
+
+Dependency Removed:
+  postfix.x86_64 2:2.10.1-7.el7                                                 
+
+Complete!
+curl -o /etc/yum.repos.d/tsf.repo http://192.168.16.40:8081/tsf.repo
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   101  100   101    0     0  45109      0 --:--:-- --:--:-- --:--:-- 50500
+yum --disablerepo=* --enablerepo=tsf install mysql-community-server
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+Resolving Dependencies
+--> Running transaction check
+---> Package mysql-community-server.x86_64 0:5.7.26-1.el7 will be installed
+--> Processing Dependency: mysql-community-common(x86-64) = 5.7.26-1.el7 for package: mysql-community-server-5.7.26-1.el7.x86_64
+--> Processing Dependency: mysql-community-client(x86-64) >= 5.7.9 for package: mysql-community-server-5.7.26-1.el7.x86_64
+--> Running transaction check
+---> Package mysql-community-client.x86_64 0:5.7.26-1.el7 will be installed
+--> Processing Dependency: mysql-community-libs(x86-64) >= 5.7.9 for package: mysql-community-client-5.7.26-1.el7.x86_64
+---> Package mysql-community-common.x86_64 0:5.7.26-1.el7 will be installed
+--> Running transaction check
+---> Package mysql-community-libs.x86_64 0:5.7.26-1.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package                      Arch         Version              Repository
+                                                                           Size
+================================================================================
+Installing:
+ mysql-community-server       x86_64       5.7.26-1.el7         tsf       166 M
+Installing for dependencies:
+ mysql-community-client       x86_64       5.7.26-1.el7         tsf        24 M
+ mysql-community-common       x86_64       5.7.26-1.el7         tsf       274 k
+ mysql-community-libs         x86_64       5.7.26-1.el7         tsf       2.2 M
+
+Transaction Summary
+================================================================================
+Install  1 Package (+3 Dependent packages)
+
+Total download size: 192 M
+Installed size: 865 M
+Downloading packages:
+--------------------------------------------------------------------------------
+Total                                              116 MB/s | 192 MB  00:01     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : mysql-community-common-5.7.26-1.el7.x86_64                   1/4 
+  Installing : mysql-community-libs-5.7.26-1.el7.x86_64                     2/4 
+  Installing : mysql-community-client-5.7.26-1.el7.x86_64                   3/4 
+  Installing : mysql-community-server-5.7.26-1.el7.x86_64                   4/4 
+  Verifying  : mysql-community-server-5.7.26-1.el7.x86_64                   1/4 
+  Verifying  : mysql-community-client-5.7.26-1.el7.x86_64                   2/4 
+  Verifying  : mysql-community-libs-5.7.26-1.el7.x86_64                     3/4 
+  Verifying  : mysql-community-common-5.7.26-1.el7.x86_64                   4/4 
+
+Installed:
+  mysql-community-server.x86_64 0:5.7.26-1.el7                                  
+
+Dependency Installed:
+  mysql-community-client.x86_64 0:5.7.26-1.el7                                  
+  mysql-community-common.x86_64 0:5.7.26-1.el7                                  
+  mysql-community-libs.x86_64 0:5.7.26-1.el7                                    
+
+Complete!
+cd /root/tsf-mysql/conf/
+is_master: 1表示为mysql master， 0表示为mysql slave
+is_master: 0
+mysql_cnf: /root/tsf-mysql/conf/my.cnf.slave
+mysql_init: /root/tsf-mysql/conf/slave.sql
+/root/tsf-mysql/conf/my.cnf.slave -- set mysql port: 3306
+/root/tsf-mysql/conf/my.cnf.slave -- set mysql innodb_buffer_pool_size: 16398096K
+\cp -f /root/tsf-mysql/conf/my.cnf.slave /etc/my.cnf && chmod 644 /etc/my.cnf
+systemctl start mysqld
+systemctl enable mysqld
+mysql: [Warning] Using a password on the command line interface can be insecure.
+if is_master=0, install mysql-utilities
+yum --disablerepo=* --enablerepo=tsf -y install mysql-utilities mysql-connector-python-2.0.4
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+Resolving Dependencies
+--> Running transaction check
+---> Package mysql-connector-python.noarch 0:2.0.4-1.el7 will be installed
+---> Package mysql-utilities.noarch 0:1.6.5-1.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package                      Arch         Version              Repository
+                                                                           Size
+================================================================================
+Installing:
+ mysql-connector-python       noarch       2.0.4-1.el7          tsf       203 k
+ mysql-utilities              noarch       1.6.5-1.el7          tsf       836 k
+
+Transaction Summary
+================================================================================
+Install  2 Packages
+
+Total download size: 1.0 M
+Installed size: 4.3 M
+Downloading packages:
+--------------------------------------------------------------------------------
+Total                                               10 MB/s | 1.0 MB  00:00     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : mysql-connector-python-2.0.4-1.el7.noarch                    1/2 
+  Installing : mysql-utilities-1.6.5-1.el7.noarch                           2/2 
+  Verifying  : mysql-connector-python-2.0.4-1.el7.noarch                    1/2 
+  Verifying  : mysql-utilities-1.6.5-1.el7.noarch                           2/2 
+
+Installed:
+  mysql-connector-python.noarch 0:2.0.4-1.el7                                   
+  mysql-utilities.noarch 0:1.6.5-1.el7                                          
+
+Complete!
+get tsf-mysql config from consul config
+is_master: 1表示为mysql master， 0表示为mysql slave
+is_master: 0
+WARNING: Using a password on the command line interface can be insecure.

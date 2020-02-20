@@ -15,8 +15,5 @@ vi   ubuntu-env/values.yaml  ##change ips of tsf-node*
 03     helm  install  consul-server/ --name  consul-server
 04    helm  install consul-client/  --name consul-client
 
-
-
-
-
-
+05  helm  install  mysql/  -f mysql/values-production.yaml   --name tsf-mysql
+vi  mysql/prepare-mysql/haproxy.cfg  ## expose mysql to host 3306
