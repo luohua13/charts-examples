@@ -9,7 +9,18 @@
  kubectl  label node tsf-docker-3 "tsf-group-2=enabled" "tsf-group-3=enabled"  "tsf-group-all=enabled"  
  kubectl label node tsf-docker-4  "tsf-group-1=enabled" "tsf-group-2=enabled"  "tsf-group-all=enabled"  
 
+ kubectl  label node  tsf-docker-1  "tsf.product.alauda.io/tsf-node1=enabled"
+ kubectl  label node  tsf-docker-3  "tsf.product.alauda.io/tsf-node3=enabled"
+ kubectl  label node  tsf-docker-4  "tsf.product.alauda.io/tsf-node2=enabled"
+ kubectl  label node  tsf-docker-2  "tsf.product.alauda.io/tsf-init=enabled"
+ kubectl label node  tsf-docker-1 "tsf.product.alauda.io/tsf-group-1=enabled" "tsf.product.alauda.io/tsf-group-3=enabled"  "tsf.product.alauda.io/tsf-group-all=enabled"
+ kubectl  label node tsf-docker-3 "tsf.product.alauda.io/tsf-group-2=enabled" "tsf.product.alauda.io/tsf-group-3=enabled"  "tsf.product.alauda.io/tsf-group-all=enabled"
+ kubectl label node  tsf-docker-4 "tsf.product.alauda.io/tsf-group-1=enabled" "tsf.product.alauda.io/tsf-group-2=enabled"  "tsf.product.alauda.io/tsf-group-all=enabled"
+ 
+
+
 vi   ubuntu-env/values.yaml  ##change ips of tsf-node* 
+vi   templates/daemonset.yaml ## name: DB_HOST
 02     helm  install  ubuntu-env/  --name  ubuntu-env
 
 03     helm  install  consul-server/ --name  consul-server
@@ -17,3 +28,5 @@ vi   ubuntu-env/values.yaml  ##change ips of tsf-node*
 
 05  helm  install  mysql/  -f mysql/values-production.yaml   --name tsf-mysql
 vi  mysql/prepare-mysql/haproxy.cfg  ## expose mysql to host 3306
+kubectl  exec -it < tsf-mysql-master-0 > bash  ## login to container, execute /opt/manual.sh
+/bin/bash  /opt/manual.sh
