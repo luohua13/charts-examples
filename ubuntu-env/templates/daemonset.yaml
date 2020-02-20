@@ -45,7 +45,10 @@ spec:
           - name: TSF_MYSQL_PASSWORD
             value: "Tcdn@2007"
           - name: DB_HOST
-            value: "192.168.122.83"
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.hostIP
           - name: LOCAL_IP
             value: "0.0.0.0"
           - name: TSF_REDIS_PASSWORD

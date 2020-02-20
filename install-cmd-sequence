@@ -30,3 +30,8 @@ vi   templates/daemonset.yaml ## name: DB_HOST
 vi  mysql/prepare-mysql/haproxy.cfg  ## expose mysql to host 3306
 kubectl  exec -it < tsf-mysql-master-0 > bash  ## login to container, execute /opt/manual.sh
 /bin/bash  /opt/manual.sh
+
+
+
+06 helm  install tsf-init/ --name  tsf-init
+# check,  init vm ports list 
