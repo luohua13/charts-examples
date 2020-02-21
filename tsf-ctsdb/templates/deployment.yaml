@@ -20,6 +20,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      hostNetwork: true
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -28,8 +29,8 @@ spec:
           - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
             name: "{{ .Values.global.volumes_root_hostpath.name }}"
             readOnly: false
-          - mountPath: "{{ .Values.global.volumes_date_hostpath.hostPath.path }}"
-            name: "{{ .Values.global.volumes_date_hostpath.name }}"
+          - mountPath: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_data_hostpath.name }}"
             readOnly: false
           - mountPath: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
             name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
@@ -53,9 +54,9 @@ spec:
         hostPath:
           path: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
           type: DirectoryOrCreate
-      - name: "{{ .Values.global.volumes_date_hostpath.name }}"
+      - name: "{{ .Values.global.volumes_data_hostpath.name }}"
         hostPath:
-          path: "{{ .Values.global.volumes_date_hostpath.hostPath.path }}"
+          path: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
           type: DirectoryOrCreate
       - name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
         hostPath:

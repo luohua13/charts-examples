@@ -4,18 +4,18 @@
 
 global:
   node_list:
-    one: 192.168.122.82 
-    two: 192.168.122.83 
-    three: 192.168.122.84
+    one: 10.0.129.13 
+    two: 10.0.129.20
+    three: 10.0.128.30
   volumes_root_hostpath:
     name: tsf-root
     hostPath:
       path: /root/tsf/
       type: ""
-  volumes_date_hostpath:
-    name: tsf-date
+  volumes_data_hostpath:
+    name: tsf-data
     hostPath:
-      path: /date/
+      path: /data/
       type: ""
   volumes_fscgroup_hostpath:
     name: fscgroup

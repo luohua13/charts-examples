@@ -17,10 +17,10 @@ global:
     hostPath:
       path: /root/tsf/
       type: ""
-  volumes_date_hostpath:
-    name: tsf-date
+  volumes_data_hostpath:
+    name: tsf-data
     hostPath:
-      path: /date/
+      path: /data/
       type: ""
   volumes_alarm_pvc:
 

@@ -73,8 +73,8 @@ spec:
           volumeMounts:
           - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
             name: "{{ .Values.global.volumes_root_hostpath.name }}"
-          - mountPath: "{{ .Values.global.volumes_date_hostpath.hostPath.path }}"
-            name: "{{ .Values.global.volumes_date_hostpath.name }}"
+          - mountPath: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_data_hostpath.name }}"
       dnsPolicy: ClusterFirst
       hostNetwork: true
       nodeSelector:

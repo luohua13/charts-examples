@@ -1,0 +1,169 @@
+Name:               tsf-mysql-master-0
+Namespace:          default
+Priority:           0
+PriorityClassName:  <none>
+Node:               tsf-docker-3/10.0.128.30
+Start Time:         Wed, 19 Feb 2020 16:49:24 +0800
+Labels:             app=mysql
+                    chart=mysql-6.8.0
+                    component=master
+                    controller-revision-hash=tsf-mysql-master-5cf7577494
+                    heritage=Tiller
+                    release=tsf-mysql
+                    statefulset.kubernetes.io/pod-name=tsf-mysql-master-0
+Annotations:        <none>
+Status:             Pending
+IP:                 
+Controlled By:      StatefulSet/tsf-mysql-master
+Init Containers:
+  volume-permissions:
+    Container ID:  
+    Image:         docker.io/bitnami/minideb:buster
+    Image ID:      
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/bash
+      -ec
+      chown -R 1001:1001 /bitnami/mysql
+      
+    State:          Waiting
+      Reason:       PodInitializing
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /bitnami/mysql from data (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-jrkl4 (ro)
+Containers:
+  mysql:
+    Container ID:   
+    Image:          docker.io/bitnami/mysql:5.7.29
+    Image ID:       
+    Port:           3306/TCP
+    Host Port:      0/TCP
+    State:          Waiting
+      Reason:       PodInitializing
+    Ready:          False
+    Restart Count:  0
+    Liveness:       exec [sh -c password_aux="${MYSQL_ROOT_PASSWORD:-}"
+if [ -f "${MYSQL_ROOT_PASSWORD_FILE:-}" ]; then
+    password_aux=$(cat $MYSQL_ROOT_PASSWORD_FILE)
+fi
+mysqladmin status -uroot -p$password_aux
+] delay=120s timeout=1s period=10s #success=1 #failure=3
+    Readiness:  exec [sh -c password_aux="${MYSQL_ROOT_PASSWORD:-}"
+if [ -f "${MYSQL_ROOT_PASSWORD_FILE:-}" ]; then
+    password_aux=$(cat $MYSQL_ROOT_PASSWORD_FILE)
+fi
+mysqladmin status -uroot -p$password_aux
+] delay=30s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      BITNAMI_DEBUG:               false
+      MYSQL_ROOT_PASSWORD:         <set to the key 'mysql-root-password' in secret 'tsf-mysql'>  Optional: false
+      MYSQL_DATABASE:              my_database
+      MYSQL_REPLICATION_MODE:      master
+      MYSQL_REPLICATION_USER:      replicator
+      MYSQL_REPLICATION_PASSWORD:  <set to the key 'mysql-replication-password' in secret 'tsf-mysql'>  Optional: false
+    Mounts:
+      /bitnami/mysql from data (rw)
+      /opt/bitnami/mysql/conf/my.cnf from config (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-jrkl4 (ro)
+  metrics:
+    Container ID:  
+    Image:         docker.io/bitnami/mysqld-exporter:0.12.1-debian-10-r0
+    Image ID:      
+    Port:          9104/TCP
+    Host Port:     0/TCP
+    Command:
+      /bin/sh
+      -c
+      password_aux="${MYSQL_ROOT_PASSWORD:-}"
+      if [ -f "${MYSQL_ROOT_PASSWORD_FILE:-}" ]; then
+          password_aux=$(cat $MYSQL_ROOT_PASSWORD_FILE)
+      fi
+      DATA_SOURCE_NAME="root:${password_aux}@(localhost:3306)/" /bin/mysqld_exporter
+      
+    State:          Waiting
+      Reason:       PodInitializing
+    Ready:          False
+    Restart Count:  0
+    Liveness:       http-get http://:metrics/metrics delay=15s timeout=5s period=10s #success=1 #failure=3
+    Readiness:      http-get http://:metrics/metrics delay=5s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      MYSQL_ROOT_PASSWORD:  <set to the key 'mysql-root-password' in secret 'tsf-mysql'>  Optional: false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-jrkl4 (ro)
+Conditions:
+  Type              Status
+  Initialized       False 
+  Ready             False 
+  ContainersReady   False 
+  PodScheduled      True 
+Volumes:
+  data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-tsf-mysql-master-0
+    ReadOnly:   false
+  config:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      tsf-mysql-master
+    Optional:  false
+  default-token-jrkl4:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-jrkl4
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  tsf-group-3=enabled
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type     Reason       Age    From                   Message
+  ----     ------       ----   ----                   -------
+  Normal   Scheduled    3m22s  default-scheduler      Successfully assigned default/tsf-mysql-master-0 to tsf-docker-3
+  Warning  FailedMount  3m22s  kubelet, tsf-docker-3  MountVolume.SetUp failed for volume "pvc-4db2159e-52f1-11ea-8e45-525400156cc4" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4 --scope -- mount -t nfs 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4
+Output: Running scope as unit run-19045.scope.
+mount.nfs: mounting 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 failed, reason given by server: No such file or directory
+  Warning  FailedMount  3m21s  kubelet, tsf-docker-3  MountVolume.SetUp failed for volume "pvc-4db2159e-52f1-11ea-8e45-525400156cc4" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4 --scope -- mount -t nfs 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4
+Output: Running scope as unit run-19063.scope.
+mount.nfs: mounting 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 failed, reason given by server: No such file or directory
+  Warning  FailedMount  3m20s  kubelet, tsf-docker-3  MountVolume.SetUp failed for volume "pvc-4db2159e-52f1-11ea-8e45-525400156cc4" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4 --scope -- mount -t nfs 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4
+Output: Running scope as unit run-19076.scope.
+mount.nfs: mounting 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 failed, reason given by server: No such file or directory
+  Warning  FailedMount  3m18s  kubelet, tsf-docker-3  MountVolume.SetUp failed for volume "pvc-4db2159e-52f1-11ea-8e45-525400156cc4" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4 --scope -- mount -t nfs 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4
+Output: Running scope as unit run-19095.scope.
+mount.nfs: mounting 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 failed, reason given by server: No such file or directory
+  Warning  FailedMount  3m13s  kubelet, tsf-docker-3  MountVolume.SetUp failed for volume "pvc-4db2159e-52f1-11ea-8e45-525400156cc4" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4 --scope -- mount -t nfs 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4
+Output: Running scope as unit run-19119.scope.
+mount.nfs: mounting 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 failed, reason given by server: No such file or directory
+  Warning  FailedMount  3m5s  kubelet, tsf-docker-3  MountVolume.SetUp failed for volume "pvc-4db2159e-52f1-11ea-8e45-525400156cc4" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4 --scope -- mount -t nfs 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4
+Output: Running scope as unit run-19182.scope.
+mount.nfs: mounting 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 failed, reason given by server: No such file or directory
+  Warning  FailedMount  2m49s  kubelet, tsf-docker-3  MountVolume.SetUp failed for volume "pvc-4db2159e-52f1-11ea-8e45-525400156cc4" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4 --scope -- mount -t nfs 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4
+Output: Running scope as unit run-19285.scope.
+mount.nfs: mounting 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 failed, reason given by server: No such file or directory
+  Warning  FailedMount  2m17s  kubelet, tsf-docker-3  MountVolume.SetUp failed for volume "pvc-4db2159e-52f1-11ea-8e45-525400156cc4" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4 --scope -- mount -t nfs 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4
+Output: Running scope as unit run-19612.scope.
+mount.nfs: mounting 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 failed, reason given by server: No such file or directory
+  Warning  FailedMount  79s  kubelet, tsf-docker-3  Unable to mount volumes for pod "tsf-mysql-master-0_default(ba8f8bad-52f4-11ea-8e45-525400156cc4)": timeout expired waiting for volumes to attach or mount for pod "default"/"tsf-mysql-master-0". list of unmounted volumes=[data]. list of unattached volumes=[data config default-token-jrkl4]
+  Warning  FailedMount  73s  kubelet, tsf-docker-3  (combined from similar events): MountVolume.SetUp failed for volume "pvc-4db2159e-52f1-11ea-8e45-525400156cc4" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4 --scope -- mount -t nfs 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 /var/lib/kubelet/pods/ba8f8bad-52f4-11ea-8e45-525400156cc4/volumes/kubernetes.io~nfs/pvc-4db2159e-52f1-11ea-8e45-525400156cc4
+Output: Running scope as unit run-20115.scope.
+mount.nfs: mounting 10.0.128.201:/nfs-server/default-data-tsf-mysql-master-0-pvc-4db2159e-52f1-11ea-8e45-525400156cc4 failed, reason given by server: No such file or directory
