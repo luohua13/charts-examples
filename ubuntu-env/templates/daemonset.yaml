@@ -26,11 +26,11 @@ spec:
           name: ubuntu-init
           env:
           - name: TSF_NODE1
-            value: "{{ .Values.global.node_list.one }}"
+            value: "{{ .Values.global.node_list.TSF_NODE1 }}"
           - name: TSF_NODE2
-            value: "{{ .Values.global.node_list.two }}"
+            value: "{{ .Values.global.node_list.TSF_NODE2 }}"
           - name: TSF_NODE3
-            value: "{{ .Values.global.node_list.three }}"
+            value: "{{ .Values.global.node_list.TSF_NODE2 }}"
           - name: SYSTEMD_IGNORE_CHROOT
             value: "1"
           - name: HOST_IP
