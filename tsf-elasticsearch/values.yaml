@@ -1,4 +1,4 @@
-# Default values for tsf-redis.
+# Default values for tsf-elasticsearch.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -23,10 +23,10 @@ global:
       path: /sys/fs/cgroup
       type: ""
 
-replicaCount: 2
+replicaCount: 3
 
 image:
-  repository: index.alauda.cn/alaudaorg/tsf-redis
+  repository: index.alauda.cn/alaudaorg/tsf-elasticsearch
   tag: v1.4
   pullPolicy: IfNotPresent
 
@@ -65,7 +65,7 @@ resources: {}
   #   memory: 128Mi
 
 nodeSelector: {
-  "tsf.product.alauda.io/tsf-group-1": "enabled"
+  "tsf.product.alauda.io/tsf-group-all": "enabled"
 }
 
 tolerations: []
