@@ -39,20 +39,11 @@ spec:
             - name: http
               containerPort: 9710 
               protocol: TCP
-          livenessProbe:
-            failureThreshold: 2
-            httpGet:
-              path: /health
-              port: 9710
-              scheme: HTTP
-            initialDelaySeconds: 100
-            periodSeconds: 2
-            successThreshold: 1
-            timeoutSeconds: 15
           readinessProbe:
-            httpGet:
-              port: 9710
-              path: /health
+            exec:
+              command:
+              - /bin/bash
+              - /root/tsf/tsf/tsf-transaction/tsf-trans-coordinator/tsf-trans-coordinator-1.11.0/bin/health.sh
             initialDelaySeconds: 45
             periodSeconds: 15
           securityContext:
