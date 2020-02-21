@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "tsf-tx.fullname" . }}
+  name: {{ include "tsf-controler.fullname" . }}
   labels:
-{{ include "tsf-tx.labels" . | indent 4 }}
+{{ include "tsf-controler.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "tsf-tx.name" . }}
+      app.kubernetes.io/name: {{ include "tsf-controler.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "tsf-tx.name" . }}
+        app.kubernetes.io/name: {{ include "tsf-controler.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -37,13 +37,13 @@ spec:
             readOnly: true
           ports:
             - name: http
-              containerPort: 18000 
+              containerPort: 8201 
               protocol: TCP
           #livenessProbe:
           #  failureThreshold: 2
           #  httpGet:
           #    path: /health
-          #    port: 18000
+          #    port: 8201
           #    scheme: HTTP
           #  initialDelaySeconds: 100
           #  periodSeconds: 2
@@ -51,7 +51,7 @@ spec:
           #  timeoutSeconds: 15
           readinessProbe:
             httpGet:
-              port: 18000
+              port: 8201
               path: /health
             initialDelaySeconds: 45
             periodSeconds: 15

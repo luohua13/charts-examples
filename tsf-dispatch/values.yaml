@@ -30,7 +30,8 @@ image:
   tag: v1.1
   pullPolicy: IfNotPresent
 
-imagePullSecrets: []
+imagePullSecrets:
+  - name: alaudaorg-secret 
 nameOverride: ""
 fullnameOverride: ""
 

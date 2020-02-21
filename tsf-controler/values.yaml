@@ -1,4 +1,4 @@
-# Default values for tsf-monitor.
+# Default values for tsf-controler.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -26,12 +26,11 @@ global:
 replicaCount: 2
 
 image:
-  repository: index.alauda.cn/alaudaorg/tsf-monitor
-  tag: v1.0
+  repository: index.alauda.cn/alaudaorg/tsf-controler
+  tag: v1.1
   pullPolicy: IfNotPresent
 
-imagePullSecrets: 
-  - name: alaudaorg-secret 
+imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 

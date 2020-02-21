@@ -39,16 +39,16 @@ spec:
             - name: http
               containerPort: 20000 
               protocol: TCP
-          livenessProbe:
-            failureThreshold: 2
-            httpGet:
-              path: /health
-              port: 20000
-              scheme: HTTP
-            initialDelaySeconds: 100
-            periodSeconds: 2
-            successThreshold: 1
-            timeoutSeconds: 15
+          #livenessProbe:
+          #  failureThreshold: 2
+          #  httpGet:
+          #    path: /health
+          #    port: 20000
+          #    scheme: HTTP
+          #  initialDelaySeconds: 100
+          #  periodSeconds: 2
+          #  successThreshold: 1
+          #  timeoutSeconds: 15
           readinessProbe:
             httpGet:
               port: 20000
