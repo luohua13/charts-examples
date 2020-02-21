@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "tsf-scalable.fullname" . }}-test-connection"
+  labels:
+{{ include "tsf-scalable.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "tsf-scalable.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

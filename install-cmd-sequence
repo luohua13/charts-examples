@@ -20,7 +20,7 @@
 
 
 vi   ubuntu-env/values.yaml  ##change ips of tsf-node* 
-vi   templates/daemonset.yaml ## name: DB_HOST
+vi   templates/daemonset.yaml ## name: DB_HOST   !!!db_host must be the same as host_ip
 02     helm  install  ubuntu-env/  --name  ubuntu-env
 
 03     helm  install  consul-server/ --name  consul-server
@@ -35,3 +35,9 @@ kubectl  exec -it < tsf-mysql-master-0 > bash  ## login to container, execute /o
 
 06 helm  install tsf-init/ --name  tsf-init
 # check,  init vm ports list 
+
+07 
+
+
+
+
