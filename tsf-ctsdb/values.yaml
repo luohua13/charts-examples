@@ -27,7 +27,7 @@ replicaCount: 3
 
 image:
   repository: index.alauda.cn/alaudaorg/tsf-ctsdb
-  tag: v1.1
+  tag: v1.2
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -64,7 +64,9 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-nodeSelector: {}
+nodeSelector: {
+  "tsf.product.alauda.io/tsf-group-all": "enabled"
+}
 
 tolerations: []
 

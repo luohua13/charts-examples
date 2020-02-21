@@ -25,15 +25,20 @@ vi   templates/daemonset.yaml ## name: DB_HOST   !!!db_host must be the same as 
 
 03     helm  install  consul-server/ --name  consul-server
 04    helm  install consul-client/  --name consul-client
+##consul client ,readiness is not config !
 
 05  helm  install  mysql/  -f mysql/values-production.yaml   --name tsf-mysql
+## tsf-mysql chart is not using hostNetwork ,so we need to use haproxy tcp proxy to clusterip
 vi  mysql/prepare-mysql/haproxy.cfg  ## expose mysql to host 3306
+## using storageclass, need to change to host Path , pv,pvc need exist.
+
 kubectl  exec -it < tsf-mysql-master-0 > bash  ## login to container, execute /opt/manual.sh
 /bin/bash  /opt/manual.sh
 
 
 
 06 helm  install tsf-init/ --name  tsf-init
+# mysql data is not mount on HOST PATH !
 # check,  init vm ports list 
 
 07 
