@@ -50,9 +50,10 @@ spec:
          #   successThreshold: 1
          #   timeoutSeconds: 15
           readinessProbe:
-            httpGet:
-              port: 7100
-              path: /ping
+            exec:
+              command:
+              - /bin/bash
+              - /opt/health.sh
             initialDelaySeconds: 45
             periodSeconds: 15
           securityContext:

@@ -27,7 +27,7 @@ replicaCount: 3
 
 image:
   repository: index.alauda.cn/alaudaorg/tsf-consul-authen
-  tag: v1.0
+  tag: v1.1
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

@@ -55,6 +55,7 @@ spec:
               path: /health
             initialDelaySeconds: 45
             periodSeconds: 15
+            timeoutSeconds: 10
           securityContext:
             privileged: true
           resources:

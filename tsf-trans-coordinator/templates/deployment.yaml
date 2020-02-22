@@ -43,7 +43,7 @@ spec:
             exec:
               command:
               - /bin/bash
-              - /root/tsf/tsf/tsf-transaction/tsf-trans-coordinator/tsf-trans-coordinator-1.11.0/bin/health.sh
+              - /root/tsf/tsf/tsf-transaction/tsf-trans-coordinator/tsf-trans-coordinator/bin/health.sh
             initialDelaySeconds: 45
             periodSeconds: 15
           securityContext:

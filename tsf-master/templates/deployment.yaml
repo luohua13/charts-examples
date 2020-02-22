@@ -43,7 +43,7 @@ spec:
             exec:
               command:
               - /bin/bash
-              - /root/tsf/tsf/tsf-apaas/tsf-master/tsf-master-1.12.0/bin/health.sh
+              - /root/tsf/tsf/tsf-apaas/tsf-master/tsf-master/bin/health.sh  
             initialDelaySeconds: 45
             periodSeconds: 15
           securityContext:
