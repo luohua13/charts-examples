@@ -155,6 +155,8 @@ master:
     [mysqld]
     default_authentication_plugin=mysql_native_password
     skip-name-resolve
+    skip-ssl
+    max-connections=500
     explicit_defaults_for_timestamp
     basedir=/opt/bitnami/mysql
     plugin_dir=/opt/bitnami/mysql/plugin
@@ -298,6 +300,8 @@ slave:
     [mysqld]
     default_authentication_plugin=mysql_native_password
     skip-name-resolve
+    skip-ssl
+    max-connections=500
     explicit_defaults_for_timestamp
     basedir=/opt/bitnami/mysql
     port=3306

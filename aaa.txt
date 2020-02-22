@@ -1,13 +1,26 @@
+#ubuntu-env
+#consul-server
+#consul-client
+#mysql
+#tsf-init
+#tsf-ctsdb
+#tsf-redis
+#tsf-elasticsearch
+##### use this command to install all .
+#####  for i  in $(cat aaa.txt  | grep -v ^#); do  helm install $i --name $i ; done
+license-server
 tsf-alarm
 tsf-apm
 tsf-auth
 tsf-consul-access
 tsf-consul-authen
 tsf-consul-config
+tsf-consul-register
 tsf-controler
 tsf-dcfg
 tsf-dispatch
 tsf-gateway
+tsf-master
 tsf-masterapi
 tsf-mesh-apiserver
 tsf-mesh-mixs
@@ -23,7 +36,6 @@ tsf-repository-server
 tsf-resource
 tsf-route
 tsf-scalable
-tsf-tx
-license-server
-tsf-consul-register
 tsf-template
+tsf-trans-coordinator
+tsf-tx

@@ -27,7 +27,7 @@ replicaCount: 1
 
 image:
   repository: index.alauda.cn/alaudaorg/tsf-init
-  tag: v1.8
+  tag: v1.9
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
