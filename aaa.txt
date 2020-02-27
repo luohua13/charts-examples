@@ -1,7 +1,7 @@
 #ubuntu-env
-#consul-server
-#consul-client
-#mysql
+#oss-consul-server
+#oss-consul-client
+#tsf-mysql
 #tsf-init
 #tsf-ctsdb
 #tsf-redis

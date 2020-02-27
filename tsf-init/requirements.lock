@@ -1,0 +1,15 @@
+dependencies:
+- name: ubuntu-env
+  repository: http://10.0.129.13:8088
+  version: 0.1.0
+- name: oss-consul-server
+  repository: http://10.0.129.13:8088
+  version: 0.1.0
+- name: oss-consul-client
+  repository: http://10.0.129.13:8088
+  version: 0.1.0
+- name: tsf-mysql
+  repository: http://10.0.129.13:8088
+  version: 6.8.0
+digest: sha256:19c9aa6af5682183880fe2a52efa4995bf5286c53d8500a3807d010af2209e82
+generated: "2020-02-26T16:54:48.39196342+08:00"
