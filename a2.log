@@ -1,21 +1,187 @@
-license-server-tsf-auth-6b85c8b74-gnnl4
-license-server-tsf-auth-6b85c8b74-tx6sh
-license-server-tsf-consul-access-74fcbbd7b8-6qcfg
-license-server-tsf-consul-access-74fcbbd7b8-p6brt
-license-server-tsf-consul-access-74fcbbd7b8-pmqgs
-license-server-tsf-dcfg-6f68cbcbb5-2x62s
-license-server-tsf-dcfg-6f68cbcbb5-qf7xb
-license-server-tsf-dispatch-8bd46447b-j6nh2
-license-server-tsf-dispatch-8bd46447b-k7hbm
-license-server-tsf-gateway-55769f64cf-586dd
-license-server-tsf-gateway-55769f64cf-kqz8g
-license-server-tsf-mesh-mixs-59479ddc8c-44kqz
-license-server-tsf-mesh-mixs-59479ddc8c-mcfhq
-license-server-tsf-ms-8447f8c8f7-cmpxh
-license-server-tsf-ms-8447f8c8f7-jrg5n
-license-server-tsf-ratelimit-master-684769745-6mln5
-license-server-tsf-ratelimit-master-684769745-swbrd
-license-server-tsf-resource-77999f965-5lfmw
-license-server-tsf-resource-77999f965-t8r4n
-license-server-tsf-route-5f8444b7b9-w64hg
-license-server-tsf-route-5f8444b7b9-w92bw
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  creationTimestamp: "2020-03-01T11:51:54Z"
+  generation: 1
+  labels:
+    app: tsf-mysql
+    chart: tsf-mysql-6.8.0
+    component: master
+    heritage: Tiller
+    release: tsf-mysql
+  name: tsf-mysql-master
+  namespace: default
+  resourceVersion: "2054861"
+  selfLink: /apis/apps/v1/namespaces/default/statefulsets/tsf-mysql-master
+  uid: 0b9d9887-5bb3-11ea-9738-5254001c5ecf
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: tsf-mysql
+      component: master
+      release: tsf-mysql
+  serviceName: tsf-mysql-master
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: tsf-mysql
+        chart: tsf-mysql-6.8.0
+        component: master
+        heritage: Tiller
+        release: tsf-mysql
+    spec:
+      containers:
+      - env:
+        - name: BITNAMI_DEBUG
+          value: "false"
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: mysql-root-password
+              name: tsf-mysql
+        - name: MYSQL_DATABASE
+          value: my_database
+        - name: MYSQL_REPLICATION_MODE
+          value: master
+        - name: MYSQL_REPLICATION_USER
+          value: replicator
+        - name: MYSQL_REPLICATION_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: mysql-replication-password
+              name: tsf-mysql
+        image: index.alauda.cn/alaudaorg/mysql:5.7.29-add.6
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - |
+              password_aux="${MYSQL_ROOT_PASSWORD:-}"
+              if [ -f "${MYSQL_ROOT_PASSWORD_FILE:-}" ]; then
+                  password_aux=$(cat $MYSQL_ROOT_PASSWORD_FILE)
+              fi
+              mysqladmin status -uroot -p$password_aux
+          failureThreshold: 3
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: mysql
+        ports:
+        - containerPort: 3306
+          name: mysql
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - |
+              password_aux="${MYSQL_ROOT_PASSWORD:-}"
+              if [ -f "${MYSQL_ROOT_PASSWORD_FILE:-}" ]; then
+                  password_aux=$(cat $MYSQL_ROOT_PASSWORD_FILE)
+              fi
+              mysqladmin status -uroot -p$password_aux
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /bitnami/mysql
+          name: data-tsf-mysql-master-0
+        - mountPath: /opt/bitnami/mysql/conf/my.cnf
+          name: config
+          subPath: my.cnf
+      - command:
+        - /bin/sh
+        - -c
+        - |
+          password_aux="${MYSQL_ROOT_PASSWORD:-}"
+          if [ -f "${MYSQL_ROOT_PASSWORD_FILE:-}" ]; then
+              password_aux=$(cat $MYSQL_ROOT_PASSWORD_FILE)
+          fi
+          DATA_SOURCE_NAME="root:${password_aux}@(localhost:3306)/" /bin/mysqld_exporter
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: mysql-root-password
+              name: tsf-mysql
+        image: docker.io/bitnami/mysqld-exporter:0.12.1-debian-10-r0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /metrics
+            port: metrics
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: metrics
+        ports:
+        - containerPort: 9104
+          name: metrics
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /metrics
+            port: metrics
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - command:
+        - /bin/bash
+        - -ec
+        - |
+          chown -R 1001:1001 /bitnami/mysql
+        image: docker.io/bitnami/minideb:buster
+        imagePullPolicy: Always
+        name: volume-permissions
+        resources: {}
+        securityContext:
+          runAsUser: 0
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /bitnami/mysql
+          name: data
+      nodeSelector:
+        tsf.product.alauda.io/tsf-node1: enabled
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        fsGroup: 1001
+        runAsUser: 1001
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: tsf-mysql-master
+        name: config
+      - name: data-tsf-mysql-master-0
+        persistentVolumeClaim:
+          claimName: data-tsf-mysql-master-0
+  updateStrategy:
+    type: RollingUpdate
+status:
+  replicas: 0

@@ -203,6 +203,7 @@ master:
   ##
 # by bsma
   nodeSelector: {
+    tsf.product.alauda.io/tsf-node1: enabled
   }
 
 #    "tsf-group-3": "enabled"
@@ -285,6 +286,7 @@ master:
     ## Use an existing PVC
     ##
     # existingClaim:
+    existingClaim: data-tsf-mysql-master-0
 
 ## Slave nodes parameters
 ##
@@ -344,7 +346,9 @@ slave:
   ## Node labels for pod assignment. Evaluated as a template.
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
-  nodeSelector: {}
+  nodeSelector: {
+    tsf.product.alauda.io/tsf-node2: enabled
+  }
 
   ## Tolerations for pod assignment
   ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -392,7 +396,8 @@ slave:
     ##
     initialDelaySeconds: 30
     periodSeconds: 10
-    timeoutSeconds: 1
+    timeoutSeconds: 5
+#    timeoutSeconds: 1
     successThreshold: 1
     failureThreshold: 3
 
@@ -425,6 +430,7 @@ slave:
     ## Use an existing PVC
     ##
     # existingClaim:
+    existingClaim: data-tsf-mysql-slave-0
 
 ## MySQL Service properties
 ##

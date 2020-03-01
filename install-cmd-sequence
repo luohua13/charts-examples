@@ -42,6 +42,17 @@ kubectl  exec -it < tsf-mysql-master-0 > bash  ## login to container, execute /o
 # check,  init vm ports list 
 
 07 
+## prepare pv,pvc
+cd  /mnt/charts-examples/tsf-mysql/prepare-pv-pvc
+kubectl apply  -f pv-tsf-mysql-master.yaml -f   pvc--data-tsf-mysql-master-0.yaml     
+kubectl apply  -f pv-tsf-mysql-slave.yaml  -f   pvc--data-tsf-mysql-slave-0.yaml
+
+
+## 成功
+MYSQL_MASTER_SVC_IP=`kubectl  get svc | grep -w tsf-mysql | grep -v slave | awk '{print $3}' `
+kubectl set env  deploy/haproxy  MYSQL_MASTER_SVC_IP=$MYSQL_MASTER_SVC_IP
+#kubectl set env  deploy/haproxy  MYSQL_MASTER_SVC_IP=10.97.83.228
+
 
 
 

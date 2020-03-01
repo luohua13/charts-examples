@@ -54,7 +54,11 @@ spec:
           resources: {{- toYaml .Values.volumePermissions.resources | nindent 12 }}
           {{- end }}
           volumeMounts:
+            {{- if .Values.master.persistence.existingClaim }}
+            - name: {{ .Values.master.persistence.existingClaim }}
+            {{- else }}
             - name: data
+            {{- end }}
               mountPath: {{ .Values.master.persistence.mountPath }}
       {{- end }}
       containers:
