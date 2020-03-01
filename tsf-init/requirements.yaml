@@ -1,0 +1,10 @@
+dependencies:
+  - name: ubuntu-env
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: oss-consul-server
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: oss-consul-client
+    version: 0.1.0
+    repository: http://10.0.129.13:8088

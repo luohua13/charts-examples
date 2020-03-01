@@ -1,0 +1,104 @@
+dependencies:
+  - name: tsf-ctsdb
+    version: 0.1.0
+    repository: http://10.0.129.13:8088	
+  - name: tsf-redis
+    version: 0.1.0
+    repository: http://10.0.129.13:8088	
+  - name: tsf-elasticsearch
+    version: 0.1.0
+    repository: http://10.0.129.13:8088	
+  - name: tsf-resource
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-consul-authen
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-consul-register
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-consul-config
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-consul-access
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-mesh-apiserver
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-mesh-pilot
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-mesh-mixs
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-repository-access
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-repository-server
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-masterapi
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-master
+    version: 0.1.0
+    repository: http://10.0.129.13:8088	
+  - name: tsf-controler
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-trans-coordinator
+    version: 0.1.0
+    repository: http://10.0.129.13:8088		
+  - name: tsf-alarm
+    version: 0.1.0
+    repository: http://10.0.129.13:8088	
+  - name: tsf-apm
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-auth
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-dcfg
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-dispatch
+    version: 0.1.0
+    repository: http://10.0.129.13:8088	
+  - name: tsf-monitor
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-ms
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-ratelimit
+    version: 0.1.0
+    repository: http://10.0.129.13:8088	
+  - name: tsf-route
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-scalable
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-template
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-tx
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-metrics
+    version: 0.1.0
+    repository: http://10.0.129.13:8088	
+  - name: tsf-record
+    version: 0.1.0
+    repository: http://10.0.129.13:8088
+  - name: tsf-ratelimit-master
+    version: 0.1.0
+    repository: http://10.0.129.13:8088	
+  - name: tsf-gateway
+    version: 0.1.0
+    repository: http://10.0.129.13:8088	
+#  - name: license-server
+#    version: 0.1.0
+#    repository: http://10.0.129.13:8088	
+
