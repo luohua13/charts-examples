@@ -1,12 +1,12 @@
 dependencies:
 - name: ubuntu-env
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: oss-consul-server
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: oss-consul-client
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
-digest: sha256:c05906447173cc3a81aa3d416e03f1092ec91cf949b05ff21c1c256eac2b4466
-generated: "2020-03-01T20:57:28.935302631+08:00"
+digest: sha256:b14edf9912147849bfa6b416eb99189035e271fea5b1c6070e39ffab9114d367
+generated: "2020-03-01T23:39:03.183387509+08:00"

@@ -1,102 +1,102 @@
 dependencies:
 - name: tsf-ctsdb
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-redis
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-elasticsearch
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-resource
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-consul-authen
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-consul-register
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-consul-config
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-consul-access
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-mesh-apiserver
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-mesh-pilot
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-mesh-mixs
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-repository-access
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-repository-server
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-masterapi
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-master
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-controler
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-trans-coordinator
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-alarm
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-apm
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-auth
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-dcfg
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-dispatch
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-monitor
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-ms
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-ratelimit
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-route
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-scalable
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-template
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-tx
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-metrics
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-record
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-ratelimit-master
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
 - name: tsf-gateway
-  repository: http://10.0.129.13:8088
+  repository: http://192.168.122.82:8890
   version: 0.1.0
-digest: sha256:d911fe7f74bfa6e314312dede7335cc184665148e9d826ed457e974880d7240d
-generated: "2020-02-26T18:13:21.914367304+08:00"
+digest: sha256:3bb38d8f4391071a53669e5323a0c5b46e7d20f549c2ae57687373d9f2150568
+generated: "2020-03-01T23:43:37.330632058+08:00"

@@ -12,7 +12,20 @@
  kubectl label node  tsf-docker-4 "tsf.product.alauda.io/tsf-group-1=enabled" "tsf.product.alauda.io/tsf-group-2=enabled"  "tsf.product.alauda.io/tsf-group-all=enabled"
  
 02.1) up a chart museum
-sh 1-run-chartmusemu.container.sh
+cd  chartmuseum
+helm serve --address 192.168.122.82:8890      ####  change ip:port as need 
+helm repo add tsf-chart-museum http://192.168.122.82:8890
+
+## for reference only.
+## if you change chartmuseum files, and want to re-package them. just do following command
+## cd  chartmuseum/  &&   ls  -ld  */ |awk '{print $9}' |awk -F / '{print $1}' > all.directory.log
+## for i in `cat all.directory.log` ; do helm package $i ; done
+##
+## Also,  update the parent chart, which call these sub-chart
+## helm dep update  license-server/
+## helm dep update tsf-init/
+
+#######useless,  sh 1-run-chartmusemu.container.sh
 
 02.2) edit tsf-nodes IP lists,
 vi  chartmuseum/ubuntu-env/values.yaml  ##change ips of tsf-node* 
@@ -21,7 +34,7 @@ helm package ubuntu-env
 
 02.3) re-package parent chart that depend on ubuntu-env
  vi tsf-init/requirements.yaml  ## if necessary
- rm  -rf  tsf-init/charts/*
+ rm  -rf  tsf-init/charts/*     ## actually, this step is not necessary, because "helm dep update xxx " command will overwrite charts diretory.
  helm dep update tsf-init/
  ls   tsf-init/charts/
 
@@ -38,7 +51,7 @@ kubectl  apply -f pvc--data-tsf-mysql-master-0.yaml  -f pvc--data-tsf-mysql-slav
 04.2) install tsf-mysql
 helm install tsf-mysql/ --name tsf-mysql
 
-04.3) post actions for tsf-mysql
+04.3) post actions for tsf-mysql  ## mysql is not using hostNetwork. so we need haproxy proxy to mysql-master svc ip.
 kubectl  apply  -f tsf-mysql-pre-post-actions/post-action-haproxy/haproxy-deployment.yaml
 
 MYSQL_MASTER_SVC_IP=`kubectl  get svc | grep -w tsf-mysql | grep -v slave | awk '{print $3}'`
@@ -65,6 +78,10 @@ kubectl  exec -it < tsf-mysql-master-0 >   bash      ### change as you need
 06.2)
 helm install license-server/ --name license-server
 
+
+## problems
+oss-consul-client without readiness !
+mysql import files can be import using "post actions", what if mysql pod restart, touch a file ".import.done.lock" in master ?
 
 
 
