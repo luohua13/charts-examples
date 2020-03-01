@@ -1,57 +1,69 @@
+### all command are execute in local  git home directory
 
 01)  DONE!  
 ## prepare,  label nodes
- kubectl  label node  tsf-docker-1  "tsf-node1=enabled"  
- kubectl  label node  tsf-docker-3  "tsf-node3=enabled"  
- kubectl  label node  tsf-docker-4  "tsf-node2=enabled"  
- kubectl  label node  tsf-docker-2   "tsf-init=enabled"  
- kubectl label node  tsf-docker-1 "tsf-group-1=enabled" "tsf-group-3=enabled"  "tsf-group-all=enabled"  
- kubectl  label node tsf-docker-3 "tsf-group-2=enabled" "tsf-group-3=enabled"  "tsf-group-all=enabled"  
- kubectl label node tsf-docker-4  "tsf-group-1=enabled" "tsf-group-2=enabled"  "tsf-group-all=enabled"  
+ kubectl  label node  tsf-docker-2  "tsf.product.alauda.io/tsf-init=enabled"
 
  kubectl  label node  tsf-docker-1  "tsf.product.alauda.io/tsf-node1=enabled"
  kubectl  label node  tsf-docker-3  "tsf.product.alauda.io/tsf-node3=enabled"
  kubectl  label node  tsf-docker-4  "tsf.product.alauda.io/tsf-node2=enabled"
- kubectl  label node  tsf-docker-2  "tsf.product.alauda.io/tsf-init=enabled"
  kubectl label node  tsf-docker-1 "tsf.product.alauda.io/tsf-group-1=enabled" "tsf.product.alauda.io/tsf-group-3=enabled"  "tsf.product.alauda.io/tsf-group-all=enabled"
  kubectl  label node tsf-docker-3 "tsf.product.alauda.io/tsf-group-2=enabled" "tsf.product.alauda.io/tsf-group-3=enabled"  "tsf.product.alauda.io/tsf-group-all=enabled"
  kubectl label node  tsf-docker-4 "tsf.product.alauda.io/tsf-group-1=enabled" "tsf.product.alauda.io/tsf-group-2=enabled"  "tsf.product.alauda.io/tsf-group-all=enabled"
  
+02.1) up a chart museum
+sh 1-run-chartmusemu.container.sh
 
+02.2) edit tsf-nodes IP lists,
+vi  chartmuseum/ubuntu-env/values.yaml  ##change ips of tsf-node* 
+cd chartmuseum/
+helm package ubuntu-env
 
-vi   ubuntu-env/values.yaml  ##change ips of tsf-node* 
-vi   templates/daemonset.yaml ## name: DB_HOST   !!!db_host must be the same as host_ip
-02     helm  install  ubuntu-env/  --name  ubuntu-env
+02.3) re-package parent chart that depend on ubuntu-env
+ vi tsf-init/requirements.yaml  ## if necessary
+ rm  -rf  tsf-init/charts/*
+ helm dep update tsf-init/
+ ls   tsf-init/charts/
 
-03     helm  install  consul-server/ --name  consul-server
-04    helm  install consul-client/  --name consul-client
-##consul client ,readiness is not config !
+03) install tsf-init 
+ helm install  tsf-init/  --name tsf-init
 
-05  helm  install  mysql/  -f mysql/values-production.yaml   --name tsf-mysql
-## tsf-mysql chart is not using hostNetwork ,so we need to use haproxy tcp proxy to clusterip
-vi  mysql/prepare-mysql/haproxy.cfg  ## expose mysql to host 3306
-## using storageclass, need to change to host Path , pv,pvc need exist.
+04)  tsf-mysql
 
-kubectl  exec -it < tsf-mysql-master-0 > bash  ## login to container, execute /opt/manual.sh
+04.1) prepare pv,pvc for tsf-mysql
+cd  tsf-mysql-pre-post-actions/pre-action-pv-pvc
+kubectl  apply -f pv-tsf-mysql-master.yaml  -f pv-tsf-mysql-slave.yaml
+kubectl  apply -f pvc--data-tsf-mysql-master-0.yaml  -f pvc--data-tsf-mysql-slave-0.yaml
+
+04.2) install tsf-mysql
+helm install tsf-mysql/ --name tsf-mysql
+
+04.3) post actions for tsf-mysql
+kubectl  apply  -f tsf-mysql-pre-post-actions/post-action-haproxy/haproxy-deployment.yaml
+
+MYSQL_MASTER_SVC_IP=`kubectl  get svc | grep -w tsf-mysql | grep -v slave | awk '{print $3}'`
+kubectl set env  deploy/haproxy  MYSQL_MASTER_SVC_IP=$MYSQL_MASTER_SVC_IP
+### kubectl set env  deploy/haproxy  MYSQL_MASTER_SVC_IP=10.97.83.228
+
+04.4) import some .sql files 
+#### login to container, execute "/bin/bash /opt/manual.sh"
+kubectl  exec -it < tsf-mysql-master-0 >   bash      ### change as you need 
 /bin/bash  /opt/manual.sh
 
 
-
-06 helm  install tsf-init/ --name  tsf-init
-# mysql data is not mount on HOST PATH !
-# check,  init vm ports list 
-
-07 
-## prepare pv,pvc
-cd  /mnt/charts-examples/tsf-mysql/prepare-pv-pvc
-kubectl apply  -f pv-tsf-mysql-master.yaml -f   pvc--data-tsf-mysql-master-0.yaml     
-kubectl apply  -f pv-tsf-mysql-slave.yaml  -f   pvc--data-tsf-mysql-slave-0.yaml
+05) login to dash broad, setting up in the web interfaces !
 
 
-## 成功
-MYSQL_MASTER_SVC_IP=`kubectl  get svc | grep -w tsf-mysql | grep -v slave | awk '{print $3}' `
-kubectl set env  deploy/haproxy  MYSQL_MASTER_SVC_IP=$MYSQL_MASTER_SVC_IP
-#kubectl set env  deploy/haproxy  MYSQL_MASTER_SVC_IP=10.97.83.228
+06) install all charts in one parent chart
+
+06.1) 
+ vi  license-server/requirements.yaml  ## if necessary
+ rm  -rf license-server/charts/*
+  helm dep update license-server/
+ ls license-server/charts/
+
+06.2)
+helm install license-server/ --name license-server
 
 
 
