@@ -4,9 +4,9 @@
 
 global:
   node_list:
-    one: 192.168.122.82 
-    two: 192.168.122.83 
-    three: 192.168.122.84
+    TSF_NODE1: 10.0.129.13 
+    TSF_NODE2: 10.0.129.20
+    TSF_NODE3: 10.0.128.30
   volumes_root_hostpath:
     name: tsf-root
     hostPath:

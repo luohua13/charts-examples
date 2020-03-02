@@ -25,9 +25,11 @@ helm repo add tsf-chart-museum http://192.168.122.82:8890
 ## helm dep update  license-server/
 ## helm dep update tsf-init/
 
-#######useless,  sh 1-run-chartmusemu.container.sh
 
 02) install tsf-init 
+## edit tsf node ip list
+vi  tsf-init/values.yaml
+
  helm install  tsf-init/  --name tsf-init
 
 03) login to dash broad, setting up in the web interfaces !
@@ -37,12 +39,6 @@ helm repo add tsf-chart-museum http://192.168.122.82:8890
 04.1) install tsf-mysql
 helm install tsf-mysql/ --name tsf-mysql
 
-04.2) post actions for tsf-mysql  ## mysql is not using hostNetwork. so we need haproxy proxy to mysql-master svc ip.
-kubectl  apply  -f post-action-haproxy/haproxy-deployment.yaml
-MYSQL_MASTER_SVC_IP=`kubectl  get svc | grep -w tsf-mysql | grep -v slave | awk '{print $3}'`
-kubectl set env  deploy/haproxy  MYSQL_MASTER_SVC_IP=$MYSQL_MASTER_SVC_IP
-### kubectl set env  deploy/haproxy  MYSQL_MASTER_SVC_IP=10.97.83.228
-
 04.3) import some .sql files 
 #### login to container, execute "/bin/bash /opt/manual.sh"
 kubectl  exec -it < tsf-mysql-master-0 >   bash      ### change as you need 
@@ -50,11 +46,6 @@ kubectl  exec -it < tsf-mysql-master-0 >   bash      ### change as you need
 
 
 06) install all charts in one parent chart
-
-06.1) 
-## edit node_list
-vi license-server/values.yaml
-
 06.2)
 helm install license-server/ --name license-server
 
