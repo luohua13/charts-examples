@@ -2,6 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "tsf-elasticsearch.fullname" . }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-89"
   labels:
 {{ include "tsf-elasticsearch.labels" . | indent 4 }}
 spec:

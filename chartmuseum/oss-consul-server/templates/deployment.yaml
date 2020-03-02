@@ -4,7 +4,7 @@ metadata:
   name: {{ include "consul-server.fullname" . }}
   annotations:
     "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-98"
+    "helm.sh/hook-weight": "-97"
   labels:
 {{ include "consul-server.labels" . | indent 4 }}
 spec:

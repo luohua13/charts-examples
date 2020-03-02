@@ -2,6 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "tsf-redis.fullname" . }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-91"
   labels:
 {{ include "tsf-redis.labels" . | indent 4 }}
 spec:

@@ -1,4 +1,13 @@
 dependencies:
+- name: ubuntu-env
+  repository: http://192.168.122.82:8890
+  version: 0.1.0
+- name: oss-consul-server
+  repository: http://192.168.122.82:8890
+  version: 0.1.0
+- name: oss-consul-client
+  repository: http://192.168.122.82:8890
+  version: 0.1.0
 - name: tsf-ctsdb
   repository: http://192.168.122.82:8890
   version: 0.1.0
@@ -98,5 +107,5 @@ dependencies:
 - name: tsf-gateway
   repository: http://192.168.122.82:8890
   version: 0.1.0
-digest: sha256:3bb38d8f4391071a53669e5323a0c5b46e7d20f549c2ae57687373d9f2150568
-generated: "2020-03-01T23:43:37.330632058+08:00"
+digest: sha256:66ed4db4c44035d33659557305cc6425c32abf82f7e03655f65e70ed745e71d5
+generated: "2020-03-02T11:52:49.708450193+08:00"

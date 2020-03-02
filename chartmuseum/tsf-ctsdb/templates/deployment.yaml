@@ -2,6 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "tsf-ctsdb.fullname" . }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-93"
   labels:
 {{ include "tsf-ctsdb.labels" . | indent 4 }}
 spec:
