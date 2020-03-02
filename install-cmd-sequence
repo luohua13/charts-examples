@@ -27,53 +27,33 @@ helm repo add tsf-chart-museum http://192.168.122.82:8890
 
 #######useless,  sh 1-run-chartmusemu.container.sh
 
-02.2) edit tsf-nodes IP lists,
-vi  chartmuseum/ubuntu-env/values.yaml  ##change ips of tsf-node* 
-cd chartmuseum/
-helm package ubuntu-env
-
-02.3) re-package parent chart that depend on ubuntu-env
- vi tsf-init/requirements.yaml  ## if necessary
- rm  -rf  tsf-init/charts/*     ## actually, this step is not necessary, because "helm dep update xxx " command will overwrite charts diretory.
- helm dep update tsf-init/
- ls   tsf-init/charts/
-
-03) install tsf-init 
+02) install tsf-init 
  helm install  tsf-init/  --name tsf-init
+
+03) login to dash broad, setting up in the web interfaces !
 
 04)  tsf-mysql
 
-04.1) prepare pv,pvc for tsf-mysql
-cd  tsf-mysql-pre-post-actions/pre-action-pv-pvc
-kubectl  apply -f pv-tsf-mysql-master.yaml  -f pv-tsf-mysql-slave.yaml
-kubectl  apply -f pvc--data-tsf-mysql-master-0.yaml  -f pvc--data-tsf-mysql-slave-0.yaml
-
-04.2) install tsf-mysql
+04.1) install tsf-mysql
 helm install tsf-mysql/ --name tsf-mysql
 
-04.3) post actions for tsf-mysql  ## mysql is not using hostNetwork. so we need haproxy proxy to mysql-master svc ip.
-kubectl  apply  -f tsf-mysql-pre-post-actions/post-action-haproxy/haproxy-deployment.yaml
-
+04.2) post actions for tsf-mysql  ## mysql is not using hostNetwork. so we need haproxy proxy to mysql-master svc ip.
+kubectl  apply  -f post-action-haproxy/haproxy-deployment.yaml
 MYSQL_MASTER_SVC_IP=`kubectl  get svc | grep -w tsf-mysql | grep -v slave | awk '{print $3}'`
 kubectl set env  deploy/haproxy  MYSQL_MASTER_SVC_IP=$MYSQL_MASTER_SVC_IP
 ### kubectl set env  deploy/haproxy  MYSQL_MASTER_SVC_IP=10.97.83.228
 
-04.4) import some .sql files 
+04.3) import some .sql files 
 #### login to container, execute "/bin/bash /opt/manual.sh"
 kubectl  exec -it < tsf-mysql-master-0 >   bash      ### change as you need 
 /bin/bash  /opt/manual.sh
 
 
-05) login to dash broad, setting up in the web interfaces !
-
-
 06) install all charts in one parent chart
 
 06.1) 
- vi  license-server/requirements.yaml  ## if necessary
- rm  -rf license-server/charts/*
-  helm dep update license-server/
- ls license-server/charts/
+## edit node_list
+vi license-server/values.yaml
 
 06.2)
 helm install license-server/ --name license-server
