@@ -51,10 +51,12 @@ clusterDomain: cluster.local
 volumePermissions:
   enabled: true
   image:
-    registry: docker.io
-    repository: bitnami/minideb
+    registry: index.alauda.cn
+    repository: alaudaorg/minideb
     tag: buster
     pullPolicy: Always
+    # repository: bitnami/minideb
+    # tag: buster
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -242,9 +244,9 @@ master:
     enabled: true
     ## Initializing the database could take some time
     ##
-    initialDelaySeconds: 120
+    initialDelaySeconds: 60
     periodSeconds: 10
-    timeoutSeconds: 1
+    timeoutSeconds: 3
     successThreshold: 1
     failureThreshold: 3
   readinessProbe:
@@ -385,7 +387,7 @@ slave:
     enabled: true
     ## Initializing the database could take some time
     ##
-    initialDelaySeconds: 120
+    initialDelaySeconds: 60
     periodSeconds: 10
     timeoutSeconds: 1
     successThreshold: 1
@@ -396,7 +398,7 @@ slave:
     ##
     initialDelaySeconds: 30
     periodSeconds: 10
-    timeoutSeconds: 5
+    timeoutSeconds: 3
 #    timeoutSeconds: 1
     successThreshold: 1
     failureThreshold: 3
@@ -437,7 +439,8 @@ slave:
 service:
   ## MySQL Service type
   ##
-  type: ClusterIP
+  #type: ClusterIP
+  type: NodePort
 
   ## MySQL Service port
   ##
@@ -447,6 +450,7 @@ service:
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ##
   # nodePort:
+  nodePort: 31306
 
   ## Provide any additional annotations which may be required. This can be used to
   ## set the LoadBalancer service type to internal only.
