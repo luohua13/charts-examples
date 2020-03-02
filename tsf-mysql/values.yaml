@@ -439,8 +439,7 @@ slave:
 service:
   ## MySQL Service type
   ##
-  #type: ClusterIP
-  type: NodePort
+  type: ClusterIP
 
   ## MySQL Service port
   ##
@@ -450,7 +449,6 @@ service:
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ##
   # nodePort:
-  nodePort: 31306
 
   ## Provide any additional annotations which may be required. This can be used to
   ## set the LoadBalancer service type to internal only.
