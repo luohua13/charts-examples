@@ -1,7 +1,4 @@
 dependencies:
-  - name: ubuntu-env
-    version: 0.1.0
-    repository: "@tsf-chart-museum"
   - name: oss-consul-server
     version: 0.1.0
     repository: "@tsf-chart-museum"

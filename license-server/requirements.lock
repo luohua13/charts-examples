@@ -1,111 +1,108 @@
 dependencies:
-- name: ubuntu-env
-  repository: http://192.168.122.82:8890
-  version: 0.1.0
 - name: oss-consul-server
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: oss-consul-client
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-ctsdb
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-redis
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-elasticsearch
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-resource
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-consul-authen
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-consul-register
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-consul-config
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-consul-access
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-mesh-apiserver
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-mesh-pilot
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-mesh-mixs
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-repository-access
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-repository-server
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-masterapi
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-master
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-controler
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-trans-coordinator
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-alarm
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-apm
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-auth
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-dcfg
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-dispatch
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-monitor
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-ms
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-ratelimit
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-route
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-scalable
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-template
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-tx
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-metrics
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-record
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-ratelimit-master
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
 - name: tsf-gateway
-  repository: http://192.168.122.82:8890
+  repository: http://10.0.129.13:8088
   version: 0.1.0
-digest: sha256:66ed4db4c44035d33659557305cc6425c32abf82f7e03655f65e70ed745e71d5
-generated: "2020-03-02T11:52:49.708450193+08:00"
+digest: sha256:ebe2051c027930d4b09abb92a076fabf7e11dcd7ef5501bdc37a7b5de9bc2483
+generated: "2020-03-02T20:39:27.962046487+08:00"
