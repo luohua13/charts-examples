@@ -21,7 +21,7 @@ spec:
         tsf.product.alauda.io/tsf-node1: enabled
       hostNetwork: true
       containers:
-      - image: 192.168.122.81:60080/claas/haproxy:v6tcp3306
+      - image: index.alauda.cn/alaudaorg/haproxy:v6tcp3306
         env:
         - name: MYSQL_MASTER_SVC_IP
           value: "10.97.83.223"
