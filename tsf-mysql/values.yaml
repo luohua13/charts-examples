@@ -205,7 +205,7 @@ master:
   ##
 # by bsma
   nodeSelector: {
-    tsf.product.alauda.io/tsf-node3: enabled
+    tsf.product.alauda.io/tsf-node1: enabled
   }
 
 #    "tsf-group-3": "enabled"
@@ -387,8 +387,8 @@ slave:
     enabled: true
     ## Initializing the database could take some time
     ##
-    initialDelaySeconds: 90
-    periodSeconds: 10
+    initialDelaySeconds: 70
+    periodSeconds: 70
     timeoutSeconds: 3
     successThreshold: 1
     failureThreshold: 3
@@ -397,7 +397,7 @@ slave:
     ## Initializing the database could take some time
     ##
     initialDelaySeconds: 70
-    periodSeconds: 10
+    periodSeconds: 70
     timeoutSeconds: 3
 #    timeoutSeconds: 1
     successThreshold: 1
