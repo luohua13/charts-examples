@@ -475,8 +475,8 @@ metrics:
   ## ref: https://hub.docker.com/r/bitnami/mysqld-exporter/tags/
   ##
   image:
-    registry: docker.io
-    repository: bitnami/mysqld-exporter
+    registry: index.alauda.cn
+    repository: alaudaorg/mysqld-exporter
     tag: 0.12.1-debian-10-r0
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
