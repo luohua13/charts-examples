@@ -1,9 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: tsf-mesh-pilot
   labels:
+    service_name: tsf-mesh-pilot
+  namespace: {{ .Values.global.namespace }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.global.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/instance: {{ .Release.Name }}
@@ -18,9 +21,9 @@ spec:
     {{- end }}
       hostNetwork: true
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: tsf-mesh-pilot
+          image: "{{ .Values.global.registry.address }}/{{ .Values.global.images.tsf-mesh-pilot.repository }}:{{ .Values.global.images.tsf-mesh-pilot.tag }}"
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
           volumeMounts:
           - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
             name: "{{ .Values.global.volumes_root_hostpath.name }}"

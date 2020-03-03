@@ -23,4 +23,204 @@ global:
       path: /sys/fs/cgroup
       type: ""
 
+  replicaCount: 2
+  replicaCountSpecial: 3
+  namespace: default
+  image:
+    pullPolicy: IfNotPresent
+  registry:
+    address: index.alauda.cn
+  images:
+    tsf-trans-coordinator:
+      repository: alaudaorg/tsf-trans-coordinator
+      tag: v1.0
+    tsf-mesh-apiserver:
+      repository: alaudaorg/tsf-mesh-apiserver
+      tag: v1.0
+    tsf-ctsdb:
+      repository: alaudaorg/tsf-ctsdb
+      tag: v1.3
+    tsf-master:
+      repository: alaudaorg/tsf-master
+      tag: v1.0
+    tsf-dispatch:
+      repository: alaudaorg/tsf-dispatch
+      tag: v1.1
+    tsf-mesh-pilot:
+      repository: alaudaorg/tsf-mesh-pilot
+      tag: v1.1
+    tsf-masterapi:
+      repository: alaudaorg/tsf-masterapi
+      tag: v1.0
+    tsf-mesh-mixs:
+      repository: alaudaorg/tsf-mesh-mixs
+      tag: v1.1
+    tsf-gateway:
+      repository: alaudaorg/tsf-gateway
+      tag: v1.0
+    tsf-resource:
+      repository: alaudaorg/tsf-resource
+      tag: v1.2
+    tsf-consul-access:
+      repository: alaudaorg/tsf-consul-access
+      tag: v1.1
+    tsf-tx:
+      repository: alaudaorg/tsf-tx
+      tag: v1.0
+    tsf-alarm:
+      repository: alaudaorg/tsf-alarm
+      tag: v1.0
+    tsf-apm:
+      repository: alaudaorg/tsf-apm
+      tag: v1.1
+    tsf-dcfg:
+      repository: alaudaorg/tsf-dcfg
+      tag: v1.0
+    tsf-redis:
+      repository: alaudaorg/tsf-redis
+      tag: v1.4
+    tsf-elasticsearch:
+      repository: alaudaorg/tsf-elasticsearch
+      tag: v1.4
+    tsf-repository-access:
+      repository: alaudaorg/tsf-repository-access
+      tag: v1.0
+    tsf-ratelimit:
+      repository: alaudaorg/tsf-ratelimit
+      tag: v1.0
+    license-server:
+      repository: alaudaorg/license-server
+      tag: v1.1
+    tsf-consul-config:
+      repository: alaudaorg/tsf-consul-config
+      tag: v1.2
+    tsf-scalable:
+      repository: alaudaorg/tsf-scalable
+      tag: v1.0
+    tsf-monitor:
+      repository: alaudaorg/tsf-monitor
+      tag: v1.0
+    tsf-route:
+      repository: alaudaorg/tsf-route
+      tag: v1.0
+    tsf-template:
+      repository: alaudaorg/tsf-template
+      tag: v1.2
+    tsf-repository-server:
+      repository: alaudaorg/tsf-repository-server
+      tag: v1.1
+    tsf-record:
+      repository: alaudaorg/tsf-record
+      tag: v1.0
+    tsf-ratelimit-master:
+      repository: alaudaorg/tsf-ratelimit-master
+      tag: v1.0
+    tsf-consul-register:
+      repository: alaudaorg/tsf-consul-register
+      tag: v1.1
+    oss-consul-client:
+      repository: alaudaorg/consul-client
+      tag: v1.2
+    oss-consul-server:
+      repository: alaudaorg/consul-server
+      tag: v1.27
+    tsf-controler:
+      repository: alaudaorg/tsf-controler
+      tag: v1.1
+    tsf-metrics:
+      repository: alaudaorg/tsf-metrics
+      tag: v1.0
+    tsf-trans-coordinator:
+      repository: alaudaorg/tsf-trans-coordinator
+      tag: v1.0
+    tsf-mesh-apiserver:
+      repository: alaudaorg/tsf-mesh-apiserver
+      tag: v1.0
+    tsf-ctsdb:
+      repository: alaudaorg/tsf-ctsdb
+      tag: v1.3
+    tsf-master:
+      repository: alaudaorg/tsf-master
+      tag: v1.0
+    tsf-dispatch:
+      repository: alaudaorg/tsf-dispatch
+      tag: v1.1
+    tsf-mesh-pilot:
+      repository: alaudaorg/tsf-mesh-pilot
+      tag: v1.1
+    tsf-masterapi:
+      repository: alaudaorg/tsf-masterapi
+      tag: v1.0
+    tsf-mesh-mixs:
+      repository: alaudaorg/tsf-mesh-mixs
+      tag: v1.1
+    tsf-gateway:
+      repository: alaudaorg/tsf-gateway
+      tag: v1.0
+    tsf-resource:
+      repository: alaudaorg/tsf-resource
+      tag: v1.2
+    tsf-consul-access:
+      repository: alaudaorg/tsf-consul-access
+      tag: v1.1
+    tsf-tx:
+      repository: alaudaorg/tsf-tx
+      tag: v1.0
+    tsf-alarm:
+      repository: alaudaorg/tsf-alarm
+      tag: v1.0
+    tsf-apm:
+      repository: alaudaorg/tsf-apm
+      tag: v1.1
+    tsf-dcfg:
+      repository: alaudaorg/tsf-dcfg
+      tag: v1.0
+    tsf-redis:
+      repository: alaudaorg/tsf-redis
+      tag: v1.4
+    tsf-elasticsearch:
+      repository: alaudaorg/tsf-elasticsearch
+      tag: v1.4
+    tsf-repository-access:
+      repository: alaudaorg/tsf-repository-access
+      tag: v1.0
+    tsf-ratelimit:
+      repository: alaudaorg/tsf-ratelimit
+      tag: v1.0
+    license-server:
+      repository: alaudaorg/license-server
+      tag: v1.1
+    tsf-consul-config:
+      repository: alaudaorg/tsf-consul-config
+      tag: v1.2
+    tsf-scalable:
+      repository: alaudaorg/tsf-scalable
+      tag: v1.0
+    tsf-monitor:
+      repository: alaudaorg/tsf-monitor
+      tag: v1.0
+    tsf-consul-authen:
+      repository: alaudaorg/tsf-consul-authen
+      tag: v1.1
+    tsf-ms:
+      repository: alaudaorg/tsf-ms
+      tag: v1.0
+    tsf-auth:
+      repository: alaudaorg/tsf-auth
+      tag: v1.1
+
+
+imagePullSecrets: []
+
+resources: {}
+
+tolerations: []
+
+affinity: {}
+
+nodeSelector: {}
+
+
+
+
 

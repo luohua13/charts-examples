@@ -4,12 +4,12 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-95"
-  name: alarm
+  name: oss-consul-client
   labels:
-    service_name: alarm
+    service_name: oss-consul-client
   namespace: {{ .Values.global.namespace }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.global.replicaCountSpecial }}
   selector:
     matchLabels:
       app.kubernetes.io/instance: {{ .Release.Name }}
@@ -24,8 +24,8 @@ spec:
     {{- end }}
       hostNetwork: true
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        - name: oss-consul-client
+          image: "{{ .Values.global.registry.address }}/{{ .Values.global.images.oss-consul-client.repository }}:{{ .Values.global.images.oss-consul-client.tag }}"
           env:
           - name: TSF_NODE1
             value: "{{ .Values.global.node_list.one }}"
@@ -42,7 +42,7 @@ spec:
           - mountPath: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
             name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
             readOnly: true
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
 #          ports:
 #            - name: http
 #              containerPort: 8500

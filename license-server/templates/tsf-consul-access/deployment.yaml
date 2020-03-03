@@ -1,9 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: tsf-consul-access
   labels:
+    service_name: tsf-consul-access
+  namespace: {{ .Values.global.namespace }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.global.replicaCountSpecial }}
   selector:
     matchLabels:
       app.kubernetes.io/instance: {{ .Release.Name }}
@@ -18,9 +21,9 @@ spec:
     {{- end }}
       hostNetwork: true
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: tsf-consul-access
+          image: "{{ .Values.global.registry.address }}/{{ .Values.global.images.tsf-consul-access.repository }}:{{ .Values.global.images.tsf-consul-access.tag }}"
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
           volumeMounts:
           - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
             name: "{{ .Values.global.volumes_root_hostpath.name }}"

@@ -4,12 +4,12 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-97"
-  name: alarm
+  name: oss-consul-server
   labels:
-    service_name: alarm
+    service_name: oss-consul-server
   namespace: {{ .Values.global.namespace }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.global.replicaCountSpecial }}
   selector:
     matchLabels:
       app.kubernetes.io/instance: {{ .Release.Name }}
@@ -24,9 +24,9 @@ spec:
     {{- end }}
       hostNetwork: true
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: oss-consul-server
+          image: "{{ .Values.global.registry.address }}/{{ .Values.global.images.oss-consul-server.repository }}:{{ .Values.global.images.oss-consul-server.tag }}"
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
           volumeMounts:
           - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
             name: "{{ .Values.global.volumes_root_hostpath.name }}"

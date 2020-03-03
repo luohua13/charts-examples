@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-91"
+  name: tsf-redis
+  labels:
+    service_name: tsf-redis
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: {{ .Values.global.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      hostNetwork: true
+      containers:
+        - name: tsf-redis
+          image: "{{ .Values.global.registry.address }}/{{ .Values.global.images.tsf-redis.repository }}:{{ .Values.global.images.tsf-redis.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+          - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_root_hostpath.name }}"
+            readOnly: false
+          - mountPath: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_data_hostpath.name }}"
+            readOnly: false
+          - mountPath: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+            readOnly: true
+          ports:
+            - name: http
+              containerPort: 6379
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          readinessProbe:
+            tcpSocket:
+              port: 6379
+            initialDelaySeconds: 45
+            periodSeconds: 15
+          securityContext:
+            privileged: true
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      - name: "{{ .Values.global.volumes_root_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_data_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

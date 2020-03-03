@@ -4,9 +4,12 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-91"
+  name: tsf-redis
   labels:
+    service_name: tsf-redis
+  namespace: {{ .Values.global.namespace }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.global.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/instance: {{ .Release.Name }}
@@ -21,9 +24,9 @@ spec:
     {{- end }}
       hostNetwork: true
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: tsf-redis
+          image: "{{ .Values.global.registry.address }}/{{ .Values.global.images.tsf-redis.repository }}:{{ .Values.global.images.tsf-redis.tag }}"
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
           volumeMounts:
           - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
             name: "{{ .Values.global.volumes_root_hostpath.name }}"
