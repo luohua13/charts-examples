@@ -205,7 +205,7 @@ master:
   ##
 # by bsma
   nodeSelector: {
-    tsf.product.alauda.io/tsf-node3: enabled
+    tsf.product.alauda.io/tsf-node1: enabled
   }
 
 #    "tsf-group-3": "enabled"
@@ -439,7 +439,8 @@ slave:
 service:
   ## MySQL Service type
   ##
-  type: ClusterIP
+  # type: ClusterIP
+  type: NodePort
 
   ## MySQL Service port
   ##
@@ -449,6 +450,7 @@ service:
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ##
   # nodePort:
+  nodePort: 31306
 
   ## Provide any additional annotations which may be required. This can be used to
   ## set the LoadBalancer service type to internal only.
