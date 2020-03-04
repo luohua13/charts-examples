@@ -3,9 +3,9 @@ entries:
   license-server:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.818067124+08:00
+    created: "2020-03-04T04:42:08.204078972+08:00"
     description: A Helm chart for Kubernetes
-    digest: 77c81f539119d49c18be521788bc859f31b9d4c03e7378c1ffd58211a48aa11c
+    digest: c9696e148d836e189e6f24dca6d89436c4cbfb02a90726c4f388dc2a1fa40c7f
     name: license-server
     urls:
     - license-server-0.1.0.tgz
@@ -13,7 +13,7 @@ entries:
   oss-consul-client:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.8200676+08:00
+    created: "2020-03-04T04:42:08.204356889+08:00"
     description: A Helm chart for Kubernetes
     digest: 95a4b53af25ee9425c41a7945b92bfe579c9e3d5f6aa29805d9f754d7108d424
     name: oss-consul-client
@@ -23,7 +23,7 @@ entries:
   oss-consul-server:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.821991705+08:00
+    created: "2020-03-04T04:42:08.204675029+08:00"
     description: A Helm chart for Kubernetes
     digest: 18b3ce3867918777654d9ed54b304e9d342d367786260aaef3f664d80138ccb1
     name: oss-consul-server
@@ -33,7 +33,7 @@ entries:
   tsf-alarm:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.823939475+08:00
+    created: "2020-03-04T04:42:08.204970411+08:00"
     description: A Helm chart for Kubernetes
     digest: abf21d573b6b3f0d1ec7b0a2dac2419095c8f3f76005c8a206eff9993fc02159
     name: tsf-alarm
@@ -43,7 +43,7 @@ entries:
   tsf-apm:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.825892359+08:00
+    created: "2020-03-04T04:42:08.205211904+08:00"
     description: A Helm chart for Kubernetes
     digest: c73fb8f8db3d9369437fd39845029a06d655191f41828303667c0596a7900f16
     name: tsf-apm
@@ -53,7 +53,7 @@ entries:
   tsf-auth:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.827961147+08:00
+    created: "2020-03-04T04:42:08.205448857+08:00"
     description: A Helm chart for Kubernetes
     digest: 2524822f73d13bbae7573028f4d11ff9eee98e8afdc13f53b34b44a1341d1a0b
     name: tsf-auth
@@ -63,7 +63,7 @@ entries:
   tsf-consul-access:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.83111353+08:00
+    created: "2020-03-04T04:42:08.20574412+08:00"
     description: A Helm chart for Kubernetes
     digest: e1822384cd56107d11b73be84ff58bdf5be1794eb70dbb1c9407e5c5abbe6a28
     name: tsf-consul-access
@@ -73,7 +73,7 @@ entries:
   tsf-consul-authen:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.834251857+08:00
+    created: "2020-03-04T04:42:08.206004094+08:00"
     description: A Helm chart for Kubernetes
     digest: fde7ae8806f56899f91fea43c61c3d27459d6df3836b3029e41e693ec8ee7385
     name: tsf-consul-authen
@@ -83,7 +83,7 @@ entries:
   tsf-consul-config:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.836851752+08:00
+    created: "2020-03-04T04:42:08.206272721+08:00"
     description: A Helm chart for Kubernetes
     digest: 5b2c33214b52257b5d62aed0e53af026cac75b65bb54e030fcdde17002ba928f
     name: tsf-consul-config
@@ -93,7 +93,7 @@ entries:
   tsf-consul-register:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.839639519+08:00
+    created: "2020-03-04T04:42:08.206563589+08:00"
     description: A Helm chart for Kubernetes
     digest: 749c94c2ad150057bc18ae0057fa4ab40cdc8ae875edb019ab224e4046143063
     name: tsf-consul-register
@@ -103,7 +103,7 @@ entries:
   tsf-controler:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.842259813+08:00
+    created: "2020-03-04T04:42:08.207766236+08:00"
     description: A Helm chart for Kubernetes
     digest: 29d465fe09b3f2e29260d291fef913a8a52de1ba9fc80ffd5c38494c123a3876
     name: tsf-controler
@@ -113,7 +113,7 @@ entries:
   tsf-ctsdb:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.844829747+08:00
+    created: "2020-03-04T04:42:08.208153081+08:00"
     description: A Helm chart for Kubernetes
     digest: 672b6b9a8bc577dfb39499774087cc1cab8a2427df76349faaa57e986a74a1ef
     name: tsf-ctsdb
@@ -123,7 +123,7 @@ entries:
   tsf-dcfg:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.847109791+08:00
+    created: "2020-03-04T04:42:08.208463096+08:00"
     description: A Helm chart for Kubernetes
     digest: 2b7d71e54e58bd13cbd5ff971425bbb9b4879bae1bf6cf9b631453704c7d7419
     name: tsf-dcfg
@@ -133,7 +133,7 @@ entries:
   tsf-dispatch:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.849532282+08:00
+    created: "2020-03-04T04:42:08.208766048+08:00"
     description: A Helm chart for Kubernetes
     digest: da8b6d11e1c74fc0d9e7b7f19f73fed5ebd595e567038778478b142ebb90f713
     name: tsf-dispatch
@@ -143,7 +143,7 @@ entries:
   tsf-elasticsearch:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.852039934+08:00
+    created: "2020-03-04T04:42:08.209026682+08:00"
     description: A Helm chart for Kubernetes
     digest: d0486d41e04500eb738353ec4fcd69d1e219130c1bf306fcac7dc38075b0b6d3
     name: tsf-elasticsearch
@@ -153,7 +153,7 @@ entries:
   tsf-gateway:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.854233484+08:00
+    created: "2020-03-04T04:42:08.209258505+08:00"
     description: A Helm chart for Kubernetes
     digest: 65930b2a55b5696cab86ac7c37f2d24593335b6068b3c251c848ca8427c08240
     name: tsf-gateway
@@ -163,7 +163,7 @@ entries:
   tsf-master:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.856541227+08:00
+    created: "2020-03-04T04:42:08.209533606+08:00"
     description: A Helm chart for Kubernetes
     digest: 68cf6229650fa6db466440e2dffa792ccb725c59cfd4bc7fd9c122f145c9ec2d
     name: tsf-master
@@ -173,7 +173,7 @@ entries:
   tsf-masterapi:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.859205767+08:00
+    created: "2020-03-04T04:42:08.209820547+08:00"
     description: A Helm chart for Kubernetes
     digest: c1f719e197192b7b3db04ceae0f7aea06367954fe6370f132ca0a47072e4b66f
     name: tsf-masterapi
@@ -183,7 +183,7 @@ entries:
   tsf-mesh-apiserver:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.861785752+08:00
+    created: "2020-03-04T04:42:08.21011416+08:00"
     description: A Helm chart for Kubernetes
     digest: d11b3e86bafe0981799cdab9b21ceeafc545804e20c8ee653e45d83805e885b7
     name: tsf-mesh-apiserver
@@ -193,7 +193,7 @@ entries:
   tsf-mesh-mixs:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.864649173+08:00
+    created: "2020-03-04T04:42:08.21039054+08:00"
     description: A Helm chart for Kubernetes
     digest: 4141eb9d5b0be728747f5b0284effcd34bfc7250ab29dd3b32cfbbd2b9b21b78
     name: tsf-mesh-mixs
@@ -203,7 +203,7 @@ entries:
   tsf-mesh-pilot:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.867372333+08:00
+    created: "2020-03-04T04:42:08.210682566+08:00"
     description: A Helm chart for Kubernetes
     digest: c03b7622f7d15131e24ad7d54251ecd1f1195e1a84e2cc411e79b0269c50e345
     name: tsf-mesh-pilot
@@ -213,7 +213,7 @@ entries:
   tsf-metrics:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.870860708+08:00
+    created: "2020-03-04T04:42:08.210931201+08:00"
     description: A Helm chart for Kubernetes
     digest: a0f3f8d01e06c3361c0be2f07ab668c444c082c7b896fe899fb3cf47646b74dd
     name: tsf-metrics
@@ -223,7 +223,7 @@ entries:
   tsf-monitor:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.873238552+08:00
+    created: "2020-03-04T04:42:08.211166347+08:00"
     description: A Helm chart for Kubernetes
     digest: 55ec25c8dffd89ee0a03c1f56d93ebebb75ce9f832816ca51080734fa4247857
     name: tsf-monitor
@@ -233,41 +233,17 @@ entries:
   tsf-ms:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.875396961+08:00
+    created: "2020-03-04T04:42:08.2113944+08:00"
     description: A Helm chart for Kubernetes
     digest: 7400963e0af1cdd0500c159bdb18b3824087ddb642ca2819aa659f0f3ceed3b7
     name: tsf-ms
     urls:
     - tsf-ms-0.1.0.tgz
     version: 0.1.0
-  tsf-mysql:
-  - apiVersion: v1
-    appVersion: 8.0.19
-    created: 2020-03-03T02:00:07.89035411+08:00
-    description: Chart to create a Highly available MySQL cluster
-    digest: c2da6a15c323bcc9fa0f4694d11cea09dcfb3e83a7647019c59b4ca365ee2f19
-    engine: gotpl
-    home: https://mysql.com
-    icon: https://bitnami.com/assets/stacks/mysql/img/mysql-stack-220x234.png
-    keywords:
-    - mysql
-    - database
-    - sql
-    - cluster
-    - high availablity
-    maintainers:
-    - email: containers@bitnami.com
-      name: Bitnami
-    name: tsf-mysql
-    sources:
-    - https://github.com/bitnami/bitnami-docker-mysql
-    urls:
-    - tsf-mysql-6.8.0.tgz
-    version: 6.8.0
   tsf-ratelimit:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.892892263+08:00
+    created: "2020-03-04T04:42:08.211670781+08:00"
     description: A Helm chart for Kubernetes
     digest: ec89d5632191d5820f2a8ee11b579273c6394c86de963fd48f0d52e57d6f8504
     name: tsf-ratelimit
@@ -277,7 +253,7 @@ entries:
   tsf-ratelimit-master:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.895451198+08:00
+    created: "2020-03-04T04:42:08.211937115+08:00"
     description: A Helm chart for Kubernetes
     digest: 9501ac7a619455582722527c99e75ade36eb040415cc50acbaafc017959acf73
     name: tsf-ratelimit-master
@@ -287,7 +263,7 @@ entries:
   tsf-record:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.897882124+08:00
+    created: "2020-03-04T04:42:08.212185289+08:00"
     description: A Helm chart for Kubernetes
     digest: 26a8f4b620bc9943b47e9f55c9977fa1b3278ada1d5a84efa79f4ef72f6989e1
     name: tsf-record
@@ -297,7 +273,7 @@ entries:
   tsf-redis:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.90053408+08:00
+    created: "2020-03-04T04:42:08.212445066+08:00"
     description: A Helm chart for Kubernetes
     digest: 49b0cd8b4d52e93f7ac6b940185b4c22bd5ddb7fa5f3109023240947bb62a5f0
     name: tsf-redis
@@ -307,7 +283,7 @@ entries:
   tsf-repository-access:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.903631951+08:00
+    created: "2020-03-04T04:42:08.21271576+08:00"
     description: A Helm chart for Kubernetes
     digest: 2cb4fe106f5f62cb2ea4decb21f0898e98e5f79babd670d92df36b0b5fd8b572
     name: tsf-repository-access
@@ -317,7 +293,7 @@ entries:
   tsf-repository-server:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.906091139+08:00
+    created: "2020-03-04T04:42:08.212960495+08:00"
     description: A Helm chart for Kubernetes
     digest: d5d34e06b997535ac8d4b9f744076ab6c5c6ac1255fb703040059c503ade310f
     name: tsf-repository-server
@@ -327,7 +303,7 @@ entries:
   tsf-resource:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.908639024+08:00
+    created: "2020-03-04T04:42:08.213221215+08:00"
     description: A Helm chart for Kubernetes
     digest: 72cbb87d5fd9bdf299d1847842087b5a2e79de0e255ccd1b7609a4b366179e27
     name: tsf-resource
@@ -337,7 +313,7 @@ entries:
   tsf-route:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.911038723+08:00
+    created: "2020-03-04T04:42:08.213500423+08:00"
     description: A Helm chart for Kubernetes
     digest: ad1b1ad74e4f675c23a38bf57ff561d91004d3045d99787a953d11a14f44e894
     name: tsf-route
@@ -347,7 +323,7 @@ entries:
   tsf-scalable:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.913332818+08:00
+    created: "2020-03-04T04:42:08.213771389+08:00"
     description: A Helm chart for Kubernetes
     digest: a358d320492c4950d3ed786a7549500e4d68d905cdf35273d3b9eb23efab7860
     name: tsf-scalable
@@ -357,7 +333,7 @@ entries:
   tsf-template:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.915720002+08:00
+    created: "2020-03-04T04:42:08.214036675+08:00"
     description: A Helm chart for Kubernetes
     digest: b93e52f4ef5a451d9d0cb5b8b9b2e77fcdc4be8f71ca1b26c791ddefd971e1a2
     name: tsf-template
@@ -367,7 +343,7 @@ entries:
   tsf-trans-coordinator:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.918251153+08:00
+    created: "2020-03-04T04:42:08.215124463+08:00"
     description: A Helm chart for Kubernetes
     digest: 81028da1c79c3ab94ecaaa82a82faa1474686443d1ed6197fde6411ff0bd7a77
     name: tsf-trans-coordinator
@@ -377,7 +353,7 @@ entries:
   tsf-tx:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.922331661+08:00
+    created: "2020-03-04T04:42:08.215405112+08:00"
     description: A Helm chart for Kubernetes
     digest: 5cad741b86e2a0d50260a0ffa4973dd4f0a1adfb2430eb03ebd42ec6019dea74
     name: tsf-tx
@@ -387,11 +363,11 @@ entries:
   ubuntu-env:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-03-03T02:00:07.925314035+08:00
+    created: "2020-03-04T04:42:08.215705915+08:00"
     description: A Helm chart for Kubernetes
     digest: 3d50166a4e283bc052dd25e90779984869536930e7e472225eb6e10fb572249d
     name: ubuntu-env
     urls:
     - ubuntu-env-0.1.0.tgz
     version: 0.1.0
-generated: 2020-03-03T02:00:07.815106252+08:00
+generated: "2020-03-04T04:42:08.203444844+08:00"
