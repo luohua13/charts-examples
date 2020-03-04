@@ -59,7 +59,8 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-nodeSelector: {}
+nodeSelector: 
+  tsf.product.alauda.io/tsf-group-all: enabled
 
 tolerations: []
 
