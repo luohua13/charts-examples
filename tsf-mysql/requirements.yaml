@@ -2,9 +2,6 @@ dependencies:
   - name: oss-consul-server
     version: 0.1.0
     repository: "@tsf-chart-museum"
-  - name: tsf-mysql
-    version: 6.8.0
-    repository: "@tsf-chart-museum"
   - name: oss-consul-client
     version: 0.1.0
     repository: "@tsf-chart-museum"
@@ -107,7 +104,7 @@ dependencies:
   - name: tsf-gateway
     version: 0.1.0
     repository: "@tsf-chart-museum"	
-#  - name: license-server
-#    version: 0.1.0
-#    repository: "@tsf-chart-museum"	
+  - name: license-server
+    version: 0.1.0
+    repository: "@tsf-chart-museum"	
 
