@@ -27,7 +27,7 @@ replicaCount: 2
 
 image:
   repository: index.alauda.cn/alaudaorg/tsf-dispatch
-  tag: v1.1
+  tag: v1.2
   pullPolicy: IfNotPresent
 
 imagePullSecrets:

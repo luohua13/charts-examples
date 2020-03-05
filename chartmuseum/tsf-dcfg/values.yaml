@@ -27,7 +27,7 @@ replicaCount: 2
 
 image:
   repository: index.alauda.cn/alaudaorg/tsf-dcfg
-  tag: v1.0
+  tag: v1.1
   pullPolicy: IfNotPresent
 
 imagePullSecrets:
