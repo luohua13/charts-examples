@@ -1,5 +1,0 @@
-[tsf]
-name=TSF components
-baseurl=http://192.168.16.47:8081/centos/7/x86_64/
-enabled=1
-gpgcheck=0

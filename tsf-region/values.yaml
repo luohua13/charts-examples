@@ -244,8 +244,8 @@ master:
     enabled: true
     ## Initializing the database could take some time
     ##
-    initialDelaySeconds: 60
-    periodSeconds: 60
+    initialDelaySeconds: 120
+    periodSeconds: 15
     timeoutSeconds: 3
     successThreshold: 1
     failureThreshold: 3
@@ -253,8 +253,8 @@ master:
     enabled: true
     ## Initializing the database could take some time
     ##
-    initialDelaySeconds: 60
-    periodSeconds: 60
+    initialDelaySeconds: 30
+    periodSeconds: 10
     timeoutSeconds: 3
     successThreshold: 1
     failureThreshold: 3
@@ -387,8 +387,8 @@ slave:
     enabled: true
     ## Initializing the database could take some time
     ##
-    initialDelaySeconds: 70
-    periodSeconds: 70
+    initialDelaySeconds: 120
+    periodSeconds: 15
     timeoutSeconds: 3
     successThreshold: 1
     failureThreshold: 3
@@ -396,8 +396,8 @@ slave:
     enabled: true
     ## Initializing the database could take some time
     ##
-    initialDelaySeconds: 70
-    periodSeconds: 70
+    initialDelaySeconds: 30
+    periodSeconds: 10
     timeoutSeconds: 3
 #    timeoutSeconds: 1
     successThreshold: 1
