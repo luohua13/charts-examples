@@ -27,7 +27,7 @@ replicaCount: 2
 
 image:
   repository: index.alauda.cn/alaudaorg/tsf-redis
-  tag: v1.4
+  tag: v1.7
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
