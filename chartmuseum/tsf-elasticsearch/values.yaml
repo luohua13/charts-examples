@@ -27,7 +27,7 @@ replicaCount: 3
 
 image:
   repository: index.alauda.cn/alaudaorg/tsf-elasticsearch
-  tag: v1.4
+  tag: v1.6
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

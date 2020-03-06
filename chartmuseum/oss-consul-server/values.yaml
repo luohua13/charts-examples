@@ -27,7 +27,7 @@ replicaCount: 3
 
 image:
   repository: index.alauda.cn/alaudaorg/consul-server
-  tag: v1.27
+  tag: v1.32
 #  tag: bsmav1.21
 #  tag: v1.0.0
   pullPolicy: IfNotPresent
