@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.global.namespace }}
+  name: ubuntu-region-env
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-101"
+spec:
+  replicas: {{ .Values.env.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tsf-region
+      app.kubernetes.io/instance: ubuntu-region-env
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tsf-region
+        app.kubernetes.io/instance: ubuntu-region-env
+    spec:
+    {{- with .Values.env.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      hostNetwork: true
+      serviceAccountName: tsf-sa
+      containers:
+        - image: "{{ .Values.global.registry.address }}/{{ .Values.global.images.env.repository }}:{{ .Values.global.images.env.tag }}"
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
+          name: ubuntu-region-env
+          env:
+          - name: TSF_NODE1
+            value: "{{ .Values.global.node_list.TSF_NODE1 }}"
+          - name: TSF_NODE2
+            value: "{{ .Values.global.node_list.TSF_NODE2 }}"
+          - name: TSF_NODE3
+            value: "{{ .Values.global.node_list.TSF_NODE3 }}"
+          - name: SYSTEMD_IGNORE_CHROOT
+            value: "1"
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.hostIP
+          - name: TSF_MYSQL_PROT
+            value: "3306"
+          - name: TSF_MYSQL_USER
+            value: root
+          - name: TSF_MYSQL_PASSWORD
+            value: "Tcdn@2007"
+          - name: DB_HOST
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.hostIP
+          - name: LOCAL_IP
+            value: "0.0.0.0"
+          - name: TSF_REDIS_PASSWORD
+            value: "Tcdn@2007"
+          - name: MAX_REDIS_MEM
+            value: 4gb
+          - name: MAX_REDIS_MEMORY_POLICY
+            value: allkeys-lru
+          - name: MAX_REDIS_CLIENTS
+            value: "2000"
+          volumeMounts:
+          - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_root_hostpath.name }}"
+            readOnly: false
+          - mountPath: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_data_hostpath.name }}"
+            readOnly: false
+          - mountPath: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+            readOnly: true
+          securityContext:
+            privileged: true
+          resources:
+            {{- toYaml .Values.env.resources | nindent 12 }}
+      volumes:
+      - name: "{{ .Values.global.volumes_root_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_data_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      {{- with .Values.env.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.env.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.env.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

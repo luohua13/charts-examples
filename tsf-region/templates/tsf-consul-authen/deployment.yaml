@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tsf-region-tsf-consul-authen
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: {{ .Values.consulAuthen.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tsf-region
+      app.kubernetes.io/instance: tsf-consul-authen
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tsf-region
+        app.kubernetes.io/instance: tsf-consul-authen
+    spec:
+    {{- with .Values.consulAuthen.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      hostNetwork: true
+      serviceAccountName: tsf-sa
+      containers:
+        - name: tsf-consul-authen
+          image: "{{ .Values.global.registry.address }}/{{ .Values.global.images.consulAuthen.repository }}:{{ .Values.global.images.consulAuthen.tag }}"
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
+          env:
+          - name: TSF_NODE1
+            value: "{{ .Values.global.node_list.TSF_NODE1 }}"
+          - name: TSF_NODE2
+            value: "{{ .Values.global.node_list.TSF_NODE2 }}"
+          - name: TSF_NODE3
+            value: "{{ .Values.global.node_list.TSF_NODE3 }}"
+          - name: SYSTEMD_IGNORE_CHROOT
+            value: "1"
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.hostIP
+          volumeMounts:
+          - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_root_hostpath.name }}"
+            readOnly: false
+          - mountPath: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_data_hostpath.name }}"
+            readOnly: false
+          - mountPath: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+            readOnly: true
+          ports:
+            - name: http
+              containerPort: 8070 
+              protocol: TCP
+          #livenessProbe:
+          #  failureThreshold: 2
+          #  httpGet:
+          #    path: /health
+          #    port: 8070
+          #    scheme: HTTP
+          #  initialDelaySeconds: 100
+          #  periodSeconds: 2
+          #  successThreshold: 1
+          #  timeoutSeconds: 15
+          readinessProbe:
+            httpGet:
+              port: 8070
+              path: /health
+            initialDelaySeconds: 45
+            periodSeconds: 15
+            timeoutSeconds: 10
+          securityContext:
+            privileged: true
+          resources:
+            {{- toYaml .Values.consulAuthen.resources | nindent 12 }}
+      volumes:
+      - name: "{{ .Values.global.volumes_root_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_data_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      {{- with .Values.consulAuthen.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.consulAuthen.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.consulAuthen.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

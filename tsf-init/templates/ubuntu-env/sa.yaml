@@ -1,0 +1,19 @@
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: tsf-sa
+  namespace: {{ .Values.global.namespace }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-101"
+{{ include "base.annotations" . | indent 4 }}
+  labels:
+{{ include "tsf.labels" . | indent 4 }}
+{{-  if .Values.registrySecrets }}
+imagePullSecrets:
+{{- range $index, $secret := .Values.registrySecrets }}
+{{- if $secret }}
+- name: {{ $secret | quote}}
+{{- end }}
+{{- end }}
+{{- end }}

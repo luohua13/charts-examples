@@ -27,7 +27,7 @@ replicaCount: 2
 
 image:
   repository: index.alauda.cn/alaudaorg/tsf-monitor
-  tag: v1.0
+  tag: v1.2
   pullPolicy: IfNotPresent
 
 imagePullSecrets: 

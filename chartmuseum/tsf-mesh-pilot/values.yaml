@@ -27,7 +27,7 @@ replicaCount: 2
 
 image:
   repository: index.alauda.cn/alaudaorg/tsf-mesh-pilot
-  tag: v1.1
+  tag: v1.3
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

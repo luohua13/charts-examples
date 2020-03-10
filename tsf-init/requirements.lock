@@ -1,6 +1,0 @@
-dependencies:
-- name: ubuntu-env
-  repository: http://10.0.129.13:8088
-  version: 0.1.0
-digest: sha256:0290129acf0e819c5dfc3e17b00d30014cbb0f7ae3ee54f4ea2e5b4a07d1957a
-generated: "2020-03-02T20:38:35.290978144+08:00"

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "ubuntu-env.fullname" . }}-test-connection"
+  labels:
+{{ include "ubuntu-env.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "ubuntu-env.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tsf-region-tsf-repository-server
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: {{ .Values.repositoryServer.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tsf-region
+      app.kubernetes.io/instance: tsf-repository-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tsf-region
+        app.kubernetes.io/instance: tsf-repository-server
+    spec:
+    {{- with .Values.repositoryServer.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      hostNetwork: true
+      serviceAccountName: tsf-sa
+      containers:
+        - name: tsf-repository-server
+          image: "{{ .Values.global.registry.address }}/{{ .Values.global.images.repositoryServer.repository }}:{{ .Values.global.images.repositoryServer.tag }}"
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
+          env:
+          - name: TSF_NODE1
+            value: "{{ .Values.global.node_list.TSF_NODE1 }}"
+          - name: TSF_NODE2
+            value: "{{ .Values.global.node_list.TSF_NODE2 }}"
+          - name: TSF_NODE3
+            value: "{{ .Values.global.node_list.TSF_NODE3 }}"
+          - name: SYSTEMD_IGNORE_CHROOT
+            value: "1"
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.hostIP
+          volumeMounts:
+          - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_root_hostpath.name }}"
+            readOnly: false
+          - mountPath: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_data_hostpath.name }}"
+            readOnly: false
+          - mountPath: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+            readOnly: true
+          ports:
+            - name: http
+              containerPort: 15001 
+              protocol: TCP
+          #livenessProbe:
+          #  failureThreshold: 2
+          #  httpGet:
+          #    path: /health
+          #    port: 15001
+          #    scheme: HTTP
+          #  initialDelaySeconds: 100
+          #  periodSeconds: 2
+          #  successThreshold: 1
+          #  timeoutSeconds: 15
+          readinessProbe:
+            httpGet:
+              port: 15001
+              path: /health
+            initialDelaySeconds: 45
+            periodSeconds: 15
+          securityContext:
+            privileged: true
+          resources:
+            {{- toYaml .Values.repositoryServer.resources | nindent 12 }}
+      volumes:
+      - name: "{{ .Values.global.volumes_root_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_data_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      {{- with .Values.repositoryServer.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.repositoryServer.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.repositoryServer.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

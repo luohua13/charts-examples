@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tsf-region-tsf-trans-coordinator
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: {{ .Values.transCoordinator.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tsf-region
+      app.kubernetes.io/instance: tsf-trans-coordinator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tsf-region
+        app.kubernetes.io/instance: tsf-trans-coordinator
+    spec:
+    {{- with .Values.transCoordinator.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      hostNetwork: true
+      serviceAccountName: tsf-sa
+      containers:
+        - name: tsf-trans-coordinator
+          image: "{{ .Values.global.registry.address }}/{{ .Values.global.images.transCoordinator.repository }}:{{ .Values.global.images.transCoordinator.tag }}"
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
+          env:
+          - name: TSF_NODE1
+            value: "{{ .Values.global.node_list.TSF_NODE1 }}"
+          - name: TSF_NODE2
+            value: "{{ .Values.global.node_list.TSF_NODE2 }}"
+          - name: TSF_NODE3
+            value: "{{ .Values.global.node_list.TSF_NODE3 }}"
+          - name: SYSTEMD_IGNORE_CHROOT
+            value: "1"
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.hostIP
+          volumeMounts:
+          - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_root_hostpath.name }}"
+            readOnly: false
+          - mountPath: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_data_hostpath.name }}"
+            readOnly: false
+          - mountPath: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+            readOnly: true
+          ports:
+            - name: http
+              containerPort: 9710 
+              protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /bin/bash
+              - /root/tsf/tsf/tsf-transaction/tsf-trans-coordinator/tsf-trans-coordinator-1.11.0/bin/health.sh
+            initialDelaySeconds: 45
+            periodSeconds: 15
+          securityContext:
+            privileged: true
+          resources:
+            {{- toYaml .Values.transCoordinator.resources | nindent 12 }}
+      volumes:
+      - name: "{{ .Values.global.volumes_root_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_data_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      {{- with .Values.transCoordinator.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.transCoordinator.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.transCoordinator.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
