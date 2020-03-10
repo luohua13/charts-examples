@@ -3,10 +3,23 @@
 # Declare variables to be passed into your templates.
 
 global:
+  labelBaseDomain: alauda.io
   node_list:
     TSF_NODE1: 10.0.129.13 
     TSF_NODE2: 10.0.129.20
     TSF_NODE3: 10.0.128.30
+  registry:
+    address: index.alauda.cn
+  images:
+    init:
+      repository: alaudak8s/tsf-init
+      tag: v1.9
+    env:
+      repository: alaudak8s/tsf-ubuntu
+      tag: v1.2
+  namespaces: cpaas-system
+  registrySecret:
+    name: alaudak8s
   volumes_root_hostpath:
     name: tsf-root
     hostPath:
@@ -25,49 +38,64 @@ global:
 
 replicaCount: 1
 
-image:
-  repository: index.alauda.cn/alaudaorg/tsf-init
-  tag: v1.9
-  pullPolicy: IfNotPresent
+init:  
+  image:
+    pullPolicy: IfNotPresent
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: ""
+  service:
+    type: ClusterIP
+    port: 80
+  ingress:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: chart-example.local
+        paths: []
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+  nodeSelector: {
+      "tsf.product.alauda.io/tsf-init": "enabled"
+    }
+  tolerations: []
+  affinity: {}
 
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
 
-service:
-  type: ClusterIP
-  port: 80
-
-ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths: []
-
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-nodeSelector: {
-    "tsf.product.alauda.io/tsf-init": "enabled"
+env:
+  image:
+    pullPolicy: IfNotPresent
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: ""
+  service:
+    type: ClusterIP
+    port: 80
+  ingress:
+    enabled: false
+    annotations: {}
+    hosts:
+      - host: chart-example.local
+        paths: []
+    tls: []
+  resources: {}
+  nodeSelector: {
+     "tsf.product.alauda.io/tsf-init": "enabled"
   }
-
-tolerations: []
-
-affinity: {}
+  tolerations: []
+  affinity: {}

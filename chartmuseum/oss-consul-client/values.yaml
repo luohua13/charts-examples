@@ -7,6 +7,11 @@ global:
     one: 192.168.122.82 
     two: 192.168.122.83 
     three: 192.168.122.84
+  volumes_cacerts_hostpath:
+    name: cacerts
+    hostPath:
+      path: /usr/lib/jvm/jre/lib/security/
+      type: ""
   volumes_root_hostpath:
     name: tsf-root
     hostPath:
@@ -22,7 +27,7 @@ replicaCount: 3
 
 image:
   repository: index.alauda.cn/alaudaorg/consul-client
-  tag: v1.4
+  tag: v1.5
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

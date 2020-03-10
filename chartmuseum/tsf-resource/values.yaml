@@ -17,6 +17,11 @@ global:
     hostPath:
       path: /data/
       type: ""
+  volumes_cacerts_hostpath:
+    name: cacerts
+    hostPath:
+      path: /etc/pki/ca-trust/extracted/java/
+      type: ""
   volumes_fscgroup_hostpath:
     name: fscgroup
     hostPath:
@@ -27,7 +32,7 @@ replicaCount: 2
 
 image:
   repository: index.alauda.cn/alaudaorg/tsf-resource
-  tag: v1.4
+  tag: v1.6
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

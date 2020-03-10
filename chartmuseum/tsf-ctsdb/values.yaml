@@ -27,7 +27,7 @@ replicaCount: 3
 
 image:
   repository: index.alauda.cn/alaudaorg/tsf-ctsdb
-  tag: v1.5
+  tag: v1.6
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

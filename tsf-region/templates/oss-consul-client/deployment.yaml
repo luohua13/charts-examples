@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tsf-region-oss-consul-client
+  namespace: {{ .Values.global.namespace }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-95"
+spec:
+  replicas: {{ .Values.consulClient.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tsf-region
+      app.kubernetes.io/instance: oss-consul-client
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tsf-region
+        app.kubernetes.io/instance: oss-consul-client
+    spec:
+    {{- with .Values.consulClient.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      hostNetwork: true
+      serviceAccountName: tsf-sa
+      containers:
+        - name: "{{ .Values.consulClient.name }}"
+          image: "{{ .Values.global.registry.address }}/{{ .Values.global.images.consulClient.repository }}:{{ .Values.global.images.consulClient.tag }}"
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
+          env:
+          - name: TSF_NODE1
+            value: "{{ .Values.global.node_list.TSF_NODE1 }}"
+          - name: TSF_NODE2
+            value: "{{ .Values.global.node_list.TSF_NODE2 }}"
+          - name: TSF_NODE3
+            value: "{{ .Values.global.node_list.TSF_NODE3 }}"
+          - name: SYSTEMD_IGNORE_CHROOT
+            value: "1"
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.hostIP
+          volumeMounts:
+          - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_root_hostpath.name }}"
+            readOnly: false
+          - mountPath: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+            readOnly: true
+          - mountPath: "{{ .Values.global.volumes_cacerts_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_cacerts_hostpath.name }}"
+            readOnly: false
+#          ports:
+#            - name: http
+#              containerPort: 8500
+#              protocol: TCP
+#          readinessProbe:
+#            httpGet:
+#              port: 8500
+#              path: /v1/health/state/critical
+#            initialDelaySeconds: 20
+#            periodSeconds: 15
+          securityContext:
+            privileged: true
+          resources:
+            {{- toYaml .Values.consulClient.resources | nindent 12 }}
+      volumes:
+      - name: "{{ .Values.global.volumes_root_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_cacerts_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_cacerts_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      {{- with .Values.consulClient.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.consulClient.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.consulClient.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

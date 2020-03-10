@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tsf-region-tsf-ms
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: {{ .Values.ms.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tsf-region
+      app.kubernetes.io/instance: tsf-ms
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tsf-region
+        app.kubernetes.io/instance: tsf-ms
+    spec:
+    {{- with .Values.ms.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      hostNetwork: true
+      serviceAccountName: tsf-sa
+      containers:
+        - name: tsf-ms
+          image: "{{ .Values.global.registry.address }}/{{ .Values.global.images.ms.repository }}:{{ .Values.global.images.ms.tag }}"
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
+          volumeMounts:
+          - mountPath: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_root_hostpath.name }}"
+            readOnly: false
+          - mountPath: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_data_hostpath.name }}"
+            readOnly: false
+          - mountPath: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+            name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+            readOnly: true
+          ports:
+            - name: http
+              containerPort: 14000 
+              protocol: TCP
+          #livenessProbe:
+          #  failureThreshold: 2
+          #  httpGet:
+          #    path: /health
+          #    port: 14000
+          #    scheme: HTTP
+          #  initialDelaySeconds: 100
+          #  periodSeconds: 2
+          #  successThreshold: 1
+          #  timeoutSeconds: 15
+          readinessProbe:
+            httpGet:
+              port: 14000
+              path: /health
+            initialDelaySeconds: 45
+            periodSeconds: 15
+          securityContext:
+            privileged: true
+          resources:
+            {{- toYaml .Values.ms.resources | nindent 12 }}
+      volumes:
+      - name: "{{ .Values.global.volumes_root_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_root_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_data_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_data_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      - name: "{{ .Values.global.volumes_fscgroup_hostpath.name }}"
+        hostPath:
+          path: "{{ .Values.global.volumes_fscgroup_hostpath.hostPath.path }}"
+          type: DirectoryOrCreate
+      {{- with .Values.ms.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.ms.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.ms.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

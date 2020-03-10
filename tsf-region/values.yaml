@@ -1,3 +1,1028 @@
+global:
+  node_list:
+    TSF_NODE1: 10.0.129.13
+    TSF_NODE2: 10.0.129.20
+    TSF_NODE3: 10.0.128.30
+  registry:
+    address: index.alauda.cn
+  namespaces: cpaas-system
+  images:
+    env:
+      repository: alaudak8s/tsf-ubuntu
+      tag: v1.2
+    consulClient:
+      repository: alaudak8s/consul-client
+      tag: v1.5
+    consulServer: 
+      repository: alaudak8s/consul-server
+      tag: v1.32
+    mysql:
+      repository: alaudak8s/mysql
+      tag: 5.7.29-add.10
+    minideb:
+      repository: alaudak8s/minideb
+      tag: buster
+    metrics:
+      repository: alaudak8s/mysqld-exporter
+      tag: 0.12.1-debian-10-r0
+    ctsdb:
+      repository: alaudak8s/tsf-ctsdb
+      tag: v1.6
+    redis:
+      repository: alaudak8s/tsf-redis 
+      tag: v1.11
+    elasticsearch:
+      repository: alaudak8s/tsf-elasticsearch
+      tag: v1.6
+    resource:
+      repository: alaudak8s/tsf-resource
+      tag: v1.6
+    consulAuthen:
+      repository: alaudak8s/tsf-consul-authen
+      tag: v1.4
+    consulRegister:
+      repository: alaudak8s/tsf-consul-register
+      tag: v1.4
+    consulConfig:
+      repository: alaudak8s/tsf-consul-config
+      tag: v1.5
+    consulAccess:
+      repository: alaudak8s/tsf-consul-access
+      tag: v1.4
+    meshApiserver:
+      repository: alaudak8s/tsf-mesh-apiserver
+      tag: v1.3
+    meshPilot:
+      repository: alaudak8s/tsf-mesh-pilot
+      tag: v1.3
+    meshMixs:
+      repository: alaudak8s/tsf-mesh-mixs 
+      tag: v1.3
+    repositoryAccess:
+      repository: alaudak8s/tsf-repository-access
+      tag: v1.2
+    repositoryServer:
+      repository: alaudak8s/tsf-repository-server
+      tag: v1.3
+    masterapi:
+      repository: alaudak8s/tsf-masterapi
+      tag: v1.3
+    tsfMaster:
+      repository: alaudak8s/tsf-master
+      tag: v1.3
+    controler:
+      repository: alaudak8s/tsf-controler
+      tag: v1.3
+    transCoordinator:
+      repository: alaudak8s/tsf-trans-coordinator
+      tag: v1.2
+    alarm:
+      repository: alaudak8s/tsf-alarm
+      tag: v1.3
+    apm:
+      repository: alaudak8s/tsf-apm
+      tag: v1.4
+    auth:
+      repository: alaudak8s/tsf-auth
+      tag:  v1.5
+    dcfg:
+      repository: alaudak8s/tsf-dcfg
+      tag: v1.2
+    dispatch:
+      repository: alaudak8s/tsf-dispatch
+      tag: v1.4
+    monitor:
+      repository: alaudak8s/tsf-monitor
+      tag: v1.2
+    ms:
+      repository: alaudak8s/tsf-ms
+      tag: v1.3
+    ratelimit:
+      repository: alaudak8s/tsf-ratelimit
+      tag: v1.2
+    route:
+      repository: alaudak8s/tsf-route
+      tag: v1.3
+    scalable:
+      repository: alaudak8s/tsf-scalable
+      tag: v1.2
+    template:
+      repository: alaudak8s/tsf-template
+      tag: v1.6
+    tx:
+      repository: alaudak8s/tsf-tx
+      tag: v1.2
+    tsfMetrics:
+      repository: alaudak8s/tsf-metrics
+      tag: v1.2
+    record:
+      repository: alaudak8s/tsf-record
+      tag: v1.2
+    ratelimitMaster:
+      repository: alaudak8s/tsf-ratelimit-master
+      tag: v1.2
+    gateway:
+      repository: alaudak8s/tsf-gateway
+      tag: v1.2
+    licenseServer:
+      repository: alaudak8s/license-server
+      tag: v1.3
+  registrySecret:
+    name: alaudak8s
+  pullPolicy: IfNotPresent
+  volumes_root_hostpath:
+    name: tsf-root
+    hostPath:
+      path: /root/tsf/
+      type: ""
+  volumes_data_hostpath:
+    name: tsf-data
+    hostPath:
+      path: /data/
+      type: ""
+  volumes_fscgroup_hostpath:
+    name: fscgroup
+    hostPath:
+      path: /sys/fs/cgroup
+      type: ""
+  volumes_cacerts_hostpath:
+    name: cacerts
+    hostPath:
+      path: /etc/pki/ca-trust/extracted/java/
+      type: ""
+
+env:
+   replicaCount: 3
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector: {
+      "tsf.product.alauda.io/tsf-group-all": "enabled"
+   }
+   tolerations: []
+   affinity: {}
+
+
+consulClient:
+   replicaCount: 3
+   name: oss-consul-client
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-all: enabled
+   tolerations: []
+   affinity: {}
+
+consulServer:
+   replicaCount: 3
+   name: oss-consul-server
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-all: enabled
+   
+   tolerations: []
+   
+   affinity: {}
+
+
+ctsdb:
+   replicaCount: 3
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector: {
+     "tsf.product.alauda.io/tsf-group-all": "enabled"
+   }
+   tolerations: []
+   affinity: {}
+
+redis:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector: {
+     "tsf.product.alauda.io/tsf-group-1": "enabled"
+   }
+   
+   tolerations: []
+   
+   affinity: {}
+
+elasticsearch:
+   replicaCount: 3
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector: {
+     "tsf.product.alauda.io/tsf-group-all": "enabled"
+   }
+   tolerations: []
+   affinity: {}
+
+
+resource:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+
+consulAuthen:
+   replicaCount: 3
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-all: enabled
+   tolerations: []
+   affinity: {}
+
+
+consulRegister:
+   replicaCount: 3
+   
+   image:
+     repository: index.alauda.cn/alaudak8s/tsf-consul-register
+     tag: v1.4   
+     pullPolicy: IfNotPresent
+   
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   
+   service:
+     type: ClusterIP
+     port: 80
+   
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+   
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-all: enabled
+   tolerations: []
+   
+   affinity: {}
+
+
+consulConfig:
+   replicaCount: 3
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-all: enabled
+   tolerations: []
+   affinity: {}
+
+
+consulAccess:
+   replicaCount: 3
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-all: enabled
+   tolerations: []
+   affinity: {}
+
+
+meshApiserver:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+meshPilot:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   
+   affinity: {}
+
+
+
+meshMixs:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+
+repositoryAccess:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+repositoryServer:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+masterapi:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+
+tsfMaster:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+controler:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+transCoordinator:
+   replicaCount: 3
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-all: enabled
+   tolerations: []
+   affinity: {}
+
+
+alarm:
+   replicaCount: 2
+   
+   image:
+     repository: index.alauda.cn/alaudak8s/tsf-alarm
+     tag: v1.3
+     pullPolicy: IfNotPresent
+   
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   
+   service:
+     type: ClusterIP
+     port: 80
+   
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+   
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   
+   affinity: {}
+
+
+
+apm:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+auth:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+dcfg:
+   replicaCount: 2
+   imagePullSecrets:
+     - name: alaudak8s-secret
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+dispatch:
+   replicaCount: 2
+   
+   image:
+     repository: index.alauda.cn/alaudak8s/tsf-dispatch
+     tag: v1.3
+     pullPolicy: IfNotPresent
+   
+   imagePullSecrets:
+     - name: alaudak8s-secret
+   nameOverride: ""
+   fullnameOverride: ""
+   
+   service:
+     type: ClusterIP
+     port: 80
+   
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+   
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   
+   affinity: {}
+
+
+monitor:
+   replicaCount: 2
+   imagePullSecrets:
+     - name: alaudak8s-secret
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+ms:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+
+ratelimit:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+route:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+
+scalable:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+
+template:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+tx:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+tsfMetrics:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+record:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+ratelimitMaster:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+gateway:
+   replicaCount: 2
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   service:
+     type: ClusterIP
+     port: 80
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   affinity: {}
+
+
+licenseServer:
+   replicaCount: 2
+   
+   image:
+     repository: index.alauda.cn/alaudak8s/license-server
+     tag: v1.3
+     pullPolicy: IfNotPresent
+   
+   imagePullSecrets: []
+   nameOverride: ""
+   fullnameOverride: ""
+   
+   service:
+     type: ClusterIP
+     port: 80
+   
+   ingress:
+     enabled: false
+     annotations: {}
+     hosts:
+       - host: chart-example.local
+         paths: []
+   
+     tls: []
+   resources: {}
+   nodeSelector:
+     tsf.product.alauda.io/tsf-group-1: enabled
+   tolerations: []
+   
+   affinity: {}
+
 ## Global Docker image parameters
 ## Please, note that this will override the image parameters, including dependencies, configured to use the global value
 ## Current available global Docker image parameters: imageRegistry and imagePullSecrets
@@ -12,9 +1037,9 @@
 ## ref: https://hub.docker.com/r/bitnami/mysql/tags/
 ##
 image:
-  registry: index.alauda.cn
-  repository: alaudaorg/mysql
-  tag: 5.7.29-add.10
+  #registry: index.alauda.cn
+  #repository: alaudak8s/mysql
+  #tag: 5.7.29-add.10
 #  registry: docker.io
 #  repository: bitnami/mysql
 #  tag: 5.7.29
@@ -51,10 +1076,10 @@ clusterDomain: cluster.local
 volumePermissions:
   enabled: true
   image:
-    registry: index.alauda.cn
-    repository: alaudaorg/minideb
-    tag: buster
-    pullPolicy: Always
+    #registry: index.alauda.cn
+    #repository: alaudak8s/minideb
+    #tag: buster
+    pullPolicy: IfNotPresent
     # repository: bitnami/minideb
     # tag: buster
     ## Optionally specify an array of imagePullSecrets.
@@ -244,8 +1269,8 @@ master:
     enabled: true
     ## Initializing the database could take some time
     ##
-    initialDelaySeconds: 60
-    periodSeconds: 60
+    initialDelaySeconds: 120
+    periodSeconds: 15
     timeoutSeconds: 3
     successThreshold: 1
     failureThreshold: 3
@@ -253,8 +1278,8 @@ master:
     enabled: true
     ## Initializing the database could take some time
     ##
-    initialDelaySeconds: 60
-    periodSeconds: 60
+    initialDelaySeconds: 30
+    periodSeconds: 10
     timeoutSeconds: 3
     successThreshold: 1
     failureThreshold: 3
@@ -387,8 +1412,8 @@ slave:
     enabled: true
     ## Initializing the database could take some time
     ##
-    initialDelaySeconds: 70
-    periodSeconds: 70
+    initialDelaySeconds: 120
+    periodSeconds: 15
     timeoutSeconds: 3
     successThreshold: 1
     failureThreshold: 3
@@ -396,8 +1421,8 @@ slave:
     enabled: true
     ## Initializing the database could take some time
     ##
-    initialDelaySeconds: 70
-    periodSeconds: 70
+    initialDelaySeconds: 30
+    periodSeconds: 10
     timeoutSeconds: 3
 #    timeoutSeconds: 1
     successThreshold: 1
@@ -475,9 +1500,9 @@ metrics:
   ## ref: https://hub.docker.com/r/bitnami/mysqld-exporter/tags/
   ##
   image:
-    registry: index.alauda.cn
-    repository: alaudaorg/mysqld-exporter
-    tag: 0.12.1-debian-10-r0
+    #registry: index.alauda.cn
+    #repository: alaudak8M/mysqld-exporter
+    #tag: 0.12.1-debian-10-r0
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.

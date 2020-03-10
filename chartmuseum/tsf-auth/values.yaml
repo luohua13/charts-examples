@@ -27,7 +27,7 @@ replicaCount: 2
 
 image:
   repository: index.alauda.cn/alaudaorg/tsf-auth
-  tag: v1.2
+  tag: v1.5
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
